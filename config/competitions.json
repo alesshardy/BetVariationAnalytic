@@ -1,0 +1,16 @@
+{
+  "high": [
+    "soccer_epl",
+    "soccer_france_ligue_one"
+  ],
+  "medium": [
+    "soccer_spain_la_liga",
+    "soccer_uefa_champs_league",
+    "soccer_germany_bundesliga"
+  ],
+  "low": [
+    "soccer_italy_serie_a",
+    "basketball_nba",
+    "tennis_atp_french_open"
+  ]
+}
