@@ -98,10 +98,10 @@ class DB {
 
       stmt.run(
         event.sport,
-        event.eventId,
-        event.homeTeam,
-        event.awayTeam,
-        event.commenceTime,
+        event.event_id,
+        event.home_team,
+        event.away_team,
+        event.commence_time,
         event.data
       );
     } catch (error) {
