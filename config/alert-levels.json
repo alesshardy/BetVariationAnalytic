@@ -1,0 +1,63 @@
+{
+  "level1": {
+    "name": "Variation Standard",
+    "emoji": "📊",
+    "color": "#3b82f6",
+    "description": "Variation notable mais dans la norme du marché",
+    "meaning": {
+      "increase": "Équipe perd confiance du marché",
+      "decrease": "Équipe gagne confiance du marché"
+    },
+    "thresholds": {
+      "increase": {
+        "favorites": { "percent": 15, "absolute": 0.25 },
+        "medium": { "percent": 25, "absolute": 0.60 },
+        "outsiders": { "percent": 50, "absolute": 3.00 }
+      },
+      "decrease": {
+        "favorites": { "percent": 12, "absolute": 0.20 },
+        "medium": { "percent": 20, "absolute": 0.50 },
+        "outsiders": { "percent": 40, "absolute": 2.50 }
+      }
+    }
+  },
+  "level2": {
+    "name": "Variation Importante",
+    "emoji": "⚠️",
+    "color": "#f59e0b",
+    "description": "Variation significative, possibles informations internes",
+    "meaning": {
+      "increase": "⚠️ Grosse perte de confiance - Info interne probable",
+      "decrease": "🔥 Forte hausse de confiance - Gros argent entrant"
+    },
+    "thresholds": {
+      "increase": {
+        "favorites": { "percent": 30, "absolute": 0.50 },
+        "medium": { "percent": 50, "absolute": 1.20 },
+        "outsiders": { "percent": 80, "absolute": 5.00 }
+      },
+      "decrease": {
+        "favorites": { "percent": 25, "absolute": 0.40 },
+        "medium": { "percent": 40, "absolute": 1.00 },
+        "outsiders": { "percent": 70, "absolute": 4.50 }
+      }
+    }
+  },
+  "level3": {
+    "name": "Inversion de Cote",
+    "emoji": "🔥",
+    "color": "#ef4444",
+    "description": "Le favori et l'outsider ont échangé leurs positions",
+    "thresholds": {
+      "oddsInversion": {
+        "minOddsDifference": 0.05,
+        "majorThreshold": 0.50,
+        "reportAllInversions": true
+      }
+    },
+    "meaning": {
+      "major": "🚨 ALERTE MAXIMALE - Inversion majeure détectée",
+      "minor": "🔄 Inversion mineure détectée - À surveiller"
+    }
+  }
+}

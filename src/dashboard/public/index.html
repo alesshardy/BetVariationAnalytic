@@ -90,9 +90,63 @@
             box-shadow: 0 2px 8px rgba(0,0,0,0.05); 
             transition: all 0.3s ease; 
         }
+        .alert-item.level-1 { border-left-color: #ffd93d; }
+        .alert-item.level-2 { border-left-color: #ff9f43; }
+        .alert-item.level-3 { border-left-color: #ee5a6f; }
+        .alert-item.inversion { 
+            border-left-color: #a55eea; 
+            background: linear-gradient(135deg, #f5f7fa 0%, #e8e5f7 100%);
+        }
         .alert-item:hover { 
             box-shadow: 0 4px 12px rgba(0,0,0,0.1); 
             transform: translateX(5px); 
+        }
+        .alert-level-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+        .alert-level-badge.level-1 { 
+            background: #ffd93d; 
+            color: #333; 
+        }
+        .alert-level-badge.level-2 { 
+            background: #ff9f43; 
+            color: white; 
+        }
+        .alert-level-badge.level-3 { 
+            background: #ee5a6f; 
+            color: white; 
+        }
+        .alert-level-badge.inversion { 
+            background: #a55eea; 
+            color: white; 
+        }
+        .filter-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .filter-tab {
+            padding: 10px 20px;
+            border: none;
+            background: #f5f5f5;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        .filter-tab.active {
+            background: #667eea;
+            color: white;
+        }
+        .filter-tab:hover {
+            background: #5568d3;
+            color: white;
         }
         .refresh-btn { 
             position: fixed; 
@@ -117,6 +171,118 @@
         .refresh-btn:active { 
             transform: translateY(0); 
         }
+
+        /* 📱 RESPONSIVE DESIGN */
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+
+            .header {
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .header p {
+                font-size: 0.95em;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+                margin-bottom: 20px;
+            }
+
+            .stat-card {
+                padding: 15px;
+            }
+
+            .stat-card h3 {
+                font-size: 0.75em;
+            }
+
+            .stat-card .value {
+                font-size: 1.8em;
+            }
+
+            .chart-container,
+            .alerts-container {
+                padding: 15px;
+                margin-bottom: 20px;
+            }
+
+            .chart-container h2,
+            .alerts-container h2 {
+                font-size: 1.3em;
+                margin-bottom: 15px;
+            }
+
+            .alert-item {
+                padding: 15px;
+                margin-bottom: 12px;
+            }
+
+            .alert-item > div:first-child {
+                flex-direction: column;
+                align-items: flex-start !important;
+            }
+
+            .alert-item > div:first-child > div:last-child {
+                margin-top: 10px;
+                text-align: left !important;
+            }
+
+            .alert-item .stat-card {
+                grid-template-columns: 1fr;
+            }
+
+            .filter-tabs {
+                gap: 8px;
+            }
+
+            .filter-tab {
+                padding: 8px 15px;
+                font-size: 0.9em;
+            }
+
+            .alert-level-badge {
+                display: block;
+                margin-left: 0;
+                margin-top: 8px;
+                width: fit-content;
+            }
+
+            .refresh-btn {
+                bottom: 15px;
+                right: 15px;
+                padding: 12px 20px;
+                font-size: 0.9em;
+            }
+
+            canvas {
+                max-height: 250px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 1.5em;
+            }
+            
+            .stat-card .value {
+                font-size: 1.5em;
+            }
+            
+            .alert-item {
+                font-size: 0.9em;
+            }
+    }
     </style>
 </head>
 <body>
@@ -127,9 +293,23 @@
         </div>
         <div class="stats-grid" id="statsGrid">
             <div class="stat-card"><h3>Total Alertes</h3><div class="value" id="totalAlerts">-</div></div>
+            <div class="stat-card"><h3>🟡 Niveau 1</h3><div class="value" id="level1Alerts">-</div></div>
+            <div class="stat-card"><h3>🟠 Niveau 2</h3><div class="value" id="level2Alerts">-</div></div>
+            <div class="stat-card"><h3>🔴 Niveau 3</h3><div class="value" id="level3Alerts">-</div></div>
+            <div class="stat-card"><h3>🔄 Inversions</h3><div class="value" id="inversionsAlerts">-</div></div>
         </div>
         <div class="chart-container"><h2>📊 Répartition des Alertes par Sport</h2><canvas id="sportsChart" height="80"></canvas></div>
-        <div class="alerts-container"><h2>🚨 Alertes Récentes</h2><div id="alertsList"></div></div>
+        <div class="alerts-container">
+            <h2>🚨 Alertes Récentes</h2>
+            <div class="filter-tabs">
+                <button class="filter-tab active" onclick="filterAlerts('all')">Toutes</button>
+                <button class="filter-tab" onclick="filterAlerts(1)">🟡 Niveau 1</button>
+                <button class="filter-tab" onclick="filterAlerts(2)">🟠 Niveau 2</button>
+                <button class="filter-tab" onclick="filterAlerts(3)">🔴 Niveau 3</button>
+                <button class="filter-tab" onclick="filterAlerts('inversions')">🔄 Inversions</button>
+            </div>
+            <div id="alertsList"></div>
+        </div>
         <button class="refresh-btn" onclick="loadData()">🔄 Actualiser</button>
     </div>
     <script>
@@ -145,27 +325,10 @@
                 
                 // Update stats
                 document.getElementById('totalAlerts').textContent = stats.total || 0;
-                
-                // Update stats grid
-                const statsGrid = document.getElementById('statsGrid');
-                statsGrid.innerHTML = `
-                    <div class="stat-card">
-                        <h3>📊 Total Alertes</h3>
-                        <div class="value">${stats.total || 0}</div>
-                    </div>
-                    <div class="stat-card">
-                        <h3>🏆 Sports Monitorés</h3>
-                        <div class="value">${stats.bySport?.length || 0}</div>
-                    </div>
-                    <div class="stat-card">
-                        <h3>📈 Variation Min</h3>
-                        <div class="value">${config.monitoring?.minPercentChange || 5}%</div>
-                    </div>
-                    <div class="stat-card">
-                        <h3>💰 Budget API</h3>
-                        <div class="value">${config.api?.monthlyBudget || 500}</div>
-                    </div>
-                `;
+                document.getElementById('level1Alerts').textContent = stats.byLevel?.level1 || 0;
+                document.getElementById('level2Alerts').textContent = stats.byLevel?.level2 || 0;
+                document.getElementById('level3Alerts').textContent = stats.byLevel?.level3 || 0;
+                document.getElementById('inversionsAlerts').textContent = stats.inversions || 0;
                 
                 // Update sports chart
                 if (stats.bySport && stats.bySport.length > 0) {
@@ -173,6 +336,7 @@
                 }
                 
                 // Update alerts list
+                window.currentAlerts = alerts;
                 displayAlerts(alerts);
                 
             } catch (error) {
@@ -238,46 +402,89 @@
                 return;
             }
             
-            alertsList.innerHTML = alerts.map(alert => `
-                <div class="alert-item" style="border-left-color: ${alert.is_increase ? '#4ade80' : '#ff6b6b'}">
-                    <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 10px;">
-                        <div>
-                            <strong style="font-size: 1.1em; color: #333;">${alert.event_name}</strong>
-                            <div style="color: #666; font-size: 0.9em; margin-top: 5px;">
-                                ${formatSportName(alert.sport)} • ${alert.bookmaker} • ${alert.market_name}
+            alertsList.innerHTML = alerts.map(alert => {
+                const levelClass = alert.is_odds_inversion ? 'inversion' : `level-${alert.alert_level || 1}`;
+                const levelBadge = alert.is_odds_inversion 
+                    ? '<span class="alert-level-badge inversion">🔄 INVERSION</span>'
+                    : `<span class="alert-level-badge level-${alert.alert_level || 1}">Niveau ${alert.alert_level || 1}</span>`;
+                
+                const inversionInfo = alert.is_odds_inversion 
+                    ? `<div style="grid-column: 1/-1; padding: 10px; background: rgba(165, 94, 234, 0.1); border-radius: 8px; margin-top: 10px;">
+                        <strong>🔄 Inversion de favori:</strong> ${alert.previous_favorite} → ${alert.new_favorite}
+                       </div>`
+                    : '';
+                
+                const meaning = alert.alert_meaning 
+                    ? `<div style="grid-column: 1/-1; font-style: italic; color: #666; margin-top: 10px;">
+                        💡 ${alert.alert_meaning}
+                       </div>`
+                    : '';
+                
+                return `
+                    <div class="alert-item ${levelClass}">
+                        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 10px;">
+                            <div>
+                                <strong style="font-size: 1.1em; color: #333;">${alert.event_name}</strong>
+                                ${levelBadge}
+                                <div style="color: #666; font-size: 0.9em; margin-top: 5px;">
+                                    ${formatSportName(alert.sport)} • ${alert.bookmaker} • ${alert.market_name}
+                                </div>
+                            </div>
+                            <div style="text-align: right;">
+                                <span style="font-size: 1.5em;">${alert.direction}</span>
+                                <div style="font-weight: bold; color: ${alert.is_increase ? '#16a34a' : '#dc2626'}; font-size: 1.2em;">
+                                    ${alert.percent_change}%
+                                </div>
                             </div>
                         </div>
-                        <div style="text-align: right;">
-                            <span style="font-size: 1.5em;">${alert.direction}</span>
-                            <div style="font-weight: bold; color: ${alert.is_increase ? '#16a34a' : '#dc2626'}; font-size: 1.2em;">
-                                ${alert.percent_change}%
+                        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; margin-top: 15px; padding-top: 15px; border-top: 1px solid #eee;">
+                            <div>
+                                <div style="color: #999; font-size: 0.85em;">Ancienne cote</div>
+                                <div style="font-weight: bold; color: #333;">${parseFloat(alert.old_price).toFixed(2)} (${alert.old_prob}%)</div>
                             </div>
+                            <div>
+                                <div style="color: #999; font-size: 0.85em;">Nouvelle cote</div>
+                                <div style="font-weight: bold; color: #333;">${parseFloat(alert.new_price).toFixed(2)} (${alert.new_prob}%)</div>
+                            </div>
+                            <div>
+                                <div style="color: #999; font-size: 0.85em;">Résultat</div>
+                                <div style="font-weight: bold; color: #667eea;">${alert.outcome}</div>
+                            </div>
+                            ${inversionInfo}
+                            ${meaning}
+                        </div>
+                        <div style="margin-top: 10px; color: #999; font-size: 0.85em;">
+                            ${new Date(alert.created_at).toLocaleString('fr-FR')}
                         </div>
                     </div>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; margin-top: 15px; padding-top: 15px; border-top: 1px solid #eee;">
-                        <div>
-                            <div style="color: #999; font-size: 0.85em;">Résultat</div>
-                            <div style="font-weight: bold; color: #333;">${alert.outcome}</div>
-                        </div>
-                        <div>
-                            <div style="color: #999; font-size: 0.85em;">Ancienne cote</div>
-                            <div style="font-weight: bold; color: #333;">${parseFloat(alert.old_price).toFixed(2)} (${parseFloat(alert.old_prob).toFixed(1)}%)</div>
-                        </div>
-                        <div>
-                            <div style="color: #999; font-size: 0.85em;">Nouvelle cote</div>
-                            <div style="font-weight: bold; color: #333;">${parseFloat(alert.new_price).toFixed(2)} (${parseFloat(alert.new_prob).toFixed(1)}%)</div>
-                        </div>
-                    </div>
-                    <div style="margin-top: 10px; font-size: 0.85em; color: #999;">
-                        ⏱️ ${formatDate(alert.created_at)} • 📅 Match: ${formatDate(alert.commence_time)}
-                    </div>
-                </div>
-            `).join('');
+                `;
+            }).join('');
+        }
+        
+        async function filterAlerts(filter) {
+            // Update active tab
+            document.querySelectorAll('.filter-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            let alerts = [];
+            if (filter === 'all') {
+                alerts = window.currentAlerts || [];
+            } else if (filter === 'inversions') {
+                const response = await fetch('/api/alerts/inversions?limit=50');
+                alerts = (await response.json()).inversions || [];
+            } else {
+                const response = await fetch(`/api/alerts/level/${filter}?limit=50`);
+                alerts = (await response.json()).alerts || [];
+            }
+            
+            displayAlerts(alerts);
         }
         
         function formatSportName(sport) {
             const names = {
-                'soccer_epl': '🏴󠁧󠁢󠁥󠁮󠁧󠁿 Premier League',
+                'soccer_epl': '🏴 Premier League',
                 'soccer_france_ligue_one': '🇫🇷 Ligue 1',
                 'soccer_spain_la_liga': '🇪🇸 La Liga',
                 'soccer_germany_bundesliga': '🇩🇪 Bundesliga',

@@ -1,0 +1,23 @@
+{
+  "football": {
+    "enabled": true,
+    "leagues": [
+      "soccer_epl",
+      "soccer_france_ligue_one",
+      "soccer_spain_la_liga",
+      "soccer_germany_bundesliga",
+      "soccer_italy_serie_a",
+      "soccer_uefa_champs_league",
+      "soccer_uefa_europa_league",
+      "soccer_portugal_primeira_liga"
+    ]
+  },
+  "basketball": {
+    "enabled": false,
+    "leagues": []
+  },
+  "tennis": {
+    "enabled": false,
+    "leagues": []
+  }
+}

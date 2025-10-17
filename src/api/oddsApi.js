@@ -21,7 +21,11 @@ class OddsAPI {
       
       return response.data;
     } catch (error) {
-      logger.error('❌ Erreur getSports:', error.message);
+      logger.error('❌ Erreur getSports:', {
+        message: error.message,
+        status: error.response?.status,
+        data: error.response?.data
+      });
       throw error;
     }
   }
@@ -36,10 +40,12 @@ class OddsAPI {
         dateFormat: 'iso'
       };
 
-      const response = await axios.get(`${this.baseUrl}/sports/${sport}/odds`, {
-        params,
-        timeout: 30000
-      });
+      const url = `${this.baseUrl}/sports/${sport}/odds`;
+      
+      logger.info(`🔍 Requête: ${url}`);
+      logger.info(`📋 Params: ${JSON.stringify(params)}`);
+
+      const response = await axios.get(url, { params, timeout: 30000 });
 
       this.usageTracker.updateFromHeaders(response.headers);
       
@@ -48,7 +54,14 @@ class OddsAPI {
 
       return response.data;
     } catch (error) {
-      logger.error(`❌ Erreur getOdds pour ${sport}:`, error.message);
+      logger.error(`❌ Erreur getOdds pour ${sport}:`, {
+        message: error.message,
+        status: error.response?.status,
+        statusText: error.response?.statusText,
+        errorData: error.response?.data,
+        requestUrl: error.config?.url,
+        requestParams: error.config?.params
+      });
       throw error;
     }
   }
@@ -72,7 +85,11 @@ class OddsAPI {
       
       return response.data;
     } catch (error) {
-      logger.error(`❌ Erreur getCompetitionOdds pour ${competition}:`, error.message);
+      logger.error(`❌ Erreur getCompetitionOdds pour ${competition}:`, {
+        message: error.message,
+        status: error.response?.status,
+        data: error.response?.data
+      });
       throw error;
     }
   }

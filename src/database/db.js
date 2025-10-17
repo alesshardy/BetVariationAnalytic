@@ -11,7 +11,6 @@ class DB {
 
   async initialize() {
     try {
-      // Créer le dossier data s'il n'existe pas
       const dbDir = path.dirname(config.database.path);
       if (!fs.existsSync(dbDir)) {
         fs.mkdirSync(dbDir, { recursive: true });
@@ -21,6 +20,7 @@ class DB {
       this.db.pragma('journal_mode = WAL');
 
       this.createTables();
+      this.migrateSchema(); // Ajouter cette ligne
       logger.info('✅ Base de données SQLite initialisée');
     } catch (error) {
       logger.error('❌ Erreur lors de l\'initialisation de la base de données:', error);
@@ -44,10 +44,11 @@ class DB {
       )
     `);
 
-    // Table des alertes
+    // Table des alertes avec les nouvelles colonnes
     this.db.exec(`
       CREATE TABLE IF NOT EXISTS alerts (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
+        alert_level INTEGER NOT NULL DEFAULT 1,
         timestamp TEXT NOT NULL,
         sport TEXT NOT NULL,
         event_id TEXT NOT NULL,
@@ -66,6 +67,12 @@ class DB {
         old_prob REAL NOT NULL,
         new_prob REAL NOT NULL,
         is_increase INTEGER NOT NULL,
+        is_odds_inversion INTEGER DEFAULT 0,
+        previous_favorite TEXT,
+        new_favorite TEXT,
+        alert_meaning TEXT,
+        odds_category TEXT,
+        variation_direction TEXT,
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP
       )
     `);
@@ -86,7 +93,39 @@ class DB {
       CREATE INDEX IF NOT EXISTS idx_events_commence_time ON events(commence_time);
       CREATE INDEX IF NOT EXISTS idx_alerts_timestamp ON alerts(timestamp);
       CREATE INDEX IF NOT EXISTS idx_alerts_sport ON alerts(sport);
+      CREATE INDEX IF NOT EXISTS idx_alerts_level ON alerts(alert_level);
+      CREATE INDEX IF NOT EXISTS idx_alerts_inversion ON alerts(is_odds_inversion);
     `);
+  }
+
+   migrateSchema() {
+    try {
+      // Vérifier si les colonnes existent
+      const tableInfo = this.db.prepare("PRAGMA table_info(alerts)").all();
+      const columns = tableInfo.map(col => col.name);
+
+      // Ajouter les colonnes manquantes (SANS NOT NULL pour éviter les erreurs)
+      const columnsToAdd = [
+        { name: 'alert_level', type: 'INTEGER DEFAULT 1' },
+        { name: 'is_odds_inversion', type: 'INTEGER DEFAULT 0' },
+        { name: 'previous_favorite', type: 'TEXT' },
+        { name: 'new_favorite', type: 'TEXT' },
+        { name: 'alert_meaning', type: 'TEXT' },
+        { name: 'odds_category', type: 'TEXT' },
+        { name: 'variation_direction', type: 'TEXT' }
+      ];
+
+      for (const col of columnsToAdd) {
+        if (!columns.includes(col.name)) {
+          this.db.exec(`ALTER TABLE alerts ADD COLUMN ${col.name} ${col.type}`);
+          logger.info(`✅ Colonne ${col.name} ajoutée à la table alerts`);
+        }
+      }
+
+      logger.info('✅ Migration du schéma terminée');
+    } catch (error) {
+      logger.error('❌ Erreur lors de la migration du schéma:', error);
+    }
   }
 
   async saveEvent(event) {
@@ -113,14 +152,16 @@ class DB {
     try {
       const stmt = this.db.prepare(`
         INSERT INTO alerts (
-          timestamp, sport, event_id, event_name, commence_time,
+          alert_level, timestamp, sport, event_id, event_name, commence_time,
           bookmaker, bookmaker_key, market, market_name, outcome,
           old_price, new_price, absolute_change, percent_change,
-          direction, old_prob, new_prob, is_increase
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+          direction, old_prob, new_prob, is_increase, is_odds_inversion,
+          previous_favorite, new_favorite, alert_meaning, odds_category, variation_direction
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
       `);
 
       stmt.run(
+        alert.alertLevel || 1,
         alert.timestamp,
         alert.sport,
         alert.eventId,
@@ -138,7 +179,15 @@ class DB {
         alert.direction,
         parseFloat(alert.oldProb),
         parseFloat(alert.newProb),
-        alert.isIncrease ? 1 : 0
+        alert.isIncrease ? 1 : 0,
+        alert.isOddsInversion ? 1 : 0,
+        alert.previousFavorite || null,
+        alert.newFavorite || null,
+        alert.meaning || null,
+        alert.category || null,
+        alert.variationDirection || null,
+        alert.isMajorInversion ? 1 : 0,
+        alert.inversionSeverity || null
       );
     } catch (error) {
       logger.error('❌ Erreur lors de la sauvegarde de l\'alerte:', error);
@@ -154,6 +203,16 @@ class DB {
     return stmt.all(limit);
   }
 
+  getAlertsByLevel(level, limit = 50) {
+    const stmt = this.db.prepare(`
+      SELECT * FROM alerts
+      WHERE alert_level = ?
+      ORDER BY created_at DESC
+      LIMIT ?
+    `);
+    return stmt.all(level, limit);
+  }
+
   getAlertsByDate(startDate, endDate) {
     const stmt = this.db.prepare(`
       SELECT * FROM alerts
@@ -163,8 +222,26 @@ class DB {
     return stmt.all(startDate, endDate);
   }
 
+  getOddsInversions(limit = 50) {
+    const stmt = this.db.prepare(`
+      SELECT * FROM alerts
+      WHERE is_odds_inversion = 1
+      ORDER BY created_at DESC
+      LIMIT ?
+    `);
+    return stmt.all(limit);
+  }
+
   getAlertStats() {
     const totalAlerts = this.db.prepare('SELECT COUNT(*) as count FROM alerts').get();
+    
+    const alertsByLevel = this.db.prepare(`
+      SELECT alert_level, COUNT(*) as count
+      FROM alerts
+      GROUP BY alert_level
+      ORDER BY alert_level
+    `).all();
+    
     const alertsBySport = this.db.prepare(`
       SELECT sport, COUNT(*) as count
       FROM alerts
@@ -180,10 +257,25 @@ class DB {
       LIMIT 10
     `).all();
 
+    const oddsInversions = this.db.prepare(`
+      SELECT COUNT(*) as count
+      FROM alerts
+      WHERE is_odds_inversion = 1
+    `).get();
+
+    const recentAlerts = this.db.prepare(`
+      SELECT * FROM alerts
+      ORDER BY created_at DESC
+      LIMIT 10
+    `).all();
+
     return {
       total: totalAlerts.count,
+      byLevel: alertsByLevel,
       bySport: alertsBySport,
-      byBookmaker: alertsByBookmaker
+      byBookmaker: alertsByBookmaker,
+      oddsInversions: oddsInversions.count,
+      recent: recentAlerts
     };
   }
 

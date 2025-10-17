@@ -10,6 +10,7 @@ const config = {
   monitoring: {
     minPercentChange: parseFloat(process.env.MIN_PERCENT_CHANGE) || 5,
     minAbsoluteChange: parseFloat(process.env.MIN_ABSOLUTE_CHANGE) || 0.10,
+    strategy: process.env.MONITORING_STRATEGY || 'continuous',
     pollingIntervals: {
       matchDay: {
         high: parseInt(process.env.POLLING_INTERVAL_MATCH_DAY) || 60,
@@ -26,6 +27,17 @@ const config = {
         medium: 720,
         low: 0
       }
+    },
+    preMatch: {
+      windowMinutes: parseInt(process.env.PRE_MATCH_WINDOW) || 15,
+      intervalSeconds: parseInt(process.env.PRE_MATCH_INTERVAL) || 180,
+      maxChecks: parseInt(process.env.PRE_MATCH_MAX_CHECKS) || 5
+    },
+    periodicScan: {
+      enabled: process.env.PERIODIC_SCAN_ENABLED === 'true',
+      intervalDays: parseInt(process.env.PERIODIC_SCAN_INTERVAL_DAYS) || 3,
+      hour: parseInt(process.env.PERIODIC_SCAN_HOUR) || 8,
+      compareWithOpeningOdds: process.env.COMPARE_WITH_OPENING_ODDS === 'true'
     }
   },
   
