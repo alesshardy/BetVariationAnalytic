@@ -129,5 +129,41 @@ backup-db: ## Télécharge la base de données depuis le serveur
 	scp $(SERVER):$(SERVER_PATH)/data/odds.db ./backup_$(shell date +%Y%m%d_%H%M%S).db
 	@echo "$(GREEN)✅ Base de données sauvegardée!$(NC)"
 
+# Commandes Betting Simulation
+betting-stats: ## Affiche les statistiques de betting
+	@echo "$(GREEN)💰 Statistiques de Betting:$(NC)"
+	ssh $(SERVER) "cd $(SERVER_PATH) && docker exec bet-variation-analytic node -e \"const db = require('better-sqlite3')('./data/odds.db'); const stats = db.prepare('SELECT COUNT(*) as total, SUM(CASE WHEN result=\\\"won\\\" THEN 1 ELSE 0 END) as wins, SUM(CASE WHEN result=\\\"lost\\\" THEN 1 ELSE 0 END) as losses, SUM(CASE WHEN result IS NULL THEN 1 ELSE 0 END) as pending, SUM(profit) as totalProfit FROM bets').get(); console.log(JSON.stringify(stats, null, 2)); db.close();\""
+
+betting-last: ## Affiche les 10 derniers paris
+	@echo "$(GREEN)📋 Derniers paris:$(NC)"
+	ssh $(SERVER) "cd $(SERVER_PATH) && docker exec bet-variation-analytic sqlite3 data/odds.db 'SELECT datetime(timestamp), event_name, alert_level, bet_size, adjusted_odds, result, profit FROM bets ORDER BY timestamp DESC LIMIT 10;'"
+
+betting-pending: ## Affiche les paris en attente de résultat
+	@echo "$(GREEN)⏳ Paris en attente:$(NC)"
+	ssh $(SERVER) "cd $(SERVER_PATH) && docker exec bet-variation-analytic sqlite3 data/odds.db 'SELECT COUNT(*) as pending, SUM(bet_size) as total_stake FROM bets WHERE result IS NULL;'"
+
+betting-fetch: ## Force la vérification des résultats
+	@echo "$(GREEN)🔍 Vérification des résultats...$(NC)"
+	ssh $(SERVER) "cd $(SERVER_PATH) && docker exec bet-variation-analytic node -e \"const fetcher = require('./src/services/resultsFetcher'); fetcher.fetchPendingResults();\""
+
+betting-web: ## Ouvre la page web de betting
+	@echo "$(GREEN)🌐 Ouverture de la page betting...$(NC)"
+	@echo "$(YELLOW)📱 URL: http://209.38.241.107:3000/betting.html$(NC)"
+	@command -v xdg-open > /dev/null && xdg-open http://209.38.241.107:3000/betting.html || command -v open > /dev/null && open http://209.38.241.107:3000/betting.html || echo "$(RED)Ouvrez manuellement: http://209.38.241.107:3000/betting.html$(NC)"
+
+betting-api: ## Teste l'API de betting
+	@echo "$(GREEN)🧪 Test de l'API betting...$(NC)"
+	@curl -s http://209.38.241.107:3000/api/bets | jq '.stats' || echo "$(RED)❌ API échouée$(NC)"
+
+# Commandes de déploiement rapide
+deploy-betting: ## Déploie uniquement les fichiers de betting
+	@echo "$(GREEN)🚀 Déploiement betting...$(NC)"
+	rsync -avz --progress src/betting/ $(SERVER):$(SERVER_PATH)/src/betting/
+	rsync -avz --progress src/services/ $(SERVER):$(SERVER_PATH)/src/services/
+	rsync -avz --progress src/dashboard/public/betting.html $(SERVER):$(SERVER_PATH)/src/dashboard/public/
+	rsync -avz --progress .env $(SERVER):$(SERVER_PATH)/
+	ssh $(SERVER) "cd $(SERVER_PATH) && docker-compose restart"
+	@echo "$(GREEN)✅ Betting déployé!$(NC)"
+
 # Commande par défaut
 .DEFAULT_GOAL := help

@@ -1,6 +1,8 @@
 const OddsAPI = require('../api/oddsApi');
 const DB = require('../database/db');
 const NotificationManager = require('../notifications/notificationManager');
+const BankrollManager = require('../betting/bankrollManager');
+const apiFootball = require('../services/apiFootballService');
 const logger = require('../utils/logger');
 const config = require('../utils/config');
 const fs = require('fs');
@@ -22,6 +24,17 @@ class SmartMonitor {
     this.upcomingMatches = new Map(); // eventId -> matchInfo avec openingOdds
     this.activeMonitors = new Map(); // eventId -> monitorInfo
     this.periodicScanInterval = null;
+    
+    // Betting simulation
+    this.simulationMode = process.env.SIMULATION_MODE === 'true';
+    this.bankrollManager = this.simulationMode ? new BankrollManager() : null;
+    
+    if (this.simulationMode) {
+      logger.info('💰 Betting simulation enabled', {
+        strategy: process.env.BETTING_STRATEGY,
+        initialBankroll: process.env.INITIAL_BANKROLL
+      });
+    }
   }
 
   loadAlertLevels() {
@@ -101,9 +114,6 @@ class SmartMonitor {
     } else {
       this.startContinuousStrategy();
     }
-
-    // Afficher le résumé
-    this.logMonitoringSummary();
   }
 
   startContinuousStrategy() {
@@ -116,7 +126,8 @@ class SmartMonitor {
   }
 
   startPreMatchStrategy() {
-    logger.info('⏰ Mode pré-match: Scan périodique tous les 3 jours + monitoring intensif 15min avant match');
+    const windowMinutes = config.monitoring.preMatch.windowMinutes || 15;
+    logger.info(`⏰ Mode pré-match: Scan périodique tous les 3 jours + monitoring intensif ${windowMinutes}min avant match`); // ✅ DYNAMIQUE.info(`⏰ Mode pré-match: Scan périodique tous les 3 jours + monitoring intensif ${windowMinutes}min avant match`); // ✅ DYNAMIQUE
     
     // Lancer le premier scan immédiatement
     this.performPeriodicScan();
@@ -721,243 +732,66 @@ class SmartMonitor {
     const inversions = this.detectOddsInversions(previousOdds, currentOdds);
     alerts.push(...inversions);
 
-    return alerts;
-  }
+    // BETTING SIMULATION: Simuler les paris si activé
+    if (this.simulationMode && this.bankrollManager && alerts.length > 0) {
+      for (const alert of alerts) {
+        // Ajuster les cotes selon la direction de variation
+        const adjustedOdds = this.bankrollManager.adjustOdds(alert.newPrice, alert.variationDirection);
+        
+        // Simuler le pari
+        const bet = this.bankrollManager.simulateBet({
+          level: alert.alertLevel,
+          event_name: alert.eventName,
+          sport_title: alert.sport,
+          bookmaker: alert.bookmaker,
+          outcome: alert.outcome,
+          original_odds: alert.newPrice,
+          variation: parseFloat(alert.percentChange),
+          direction: alert.variationDirection,
+          commence_time: alert.commenceTime,
+          home_team: alert.eventName.split(' vs ')[0],
+          away_team: alert.eventName.split(' vs ')[1]
+        }, adjustedOdds);
 
-  getOddsCategory(price) {
-    if (price < 2.0) return 'favorites';
-    if (price <= 4.0) return 'medium';
-    return 'outsiders';
-  }
-
-  determineAlertLevel(oldPrice, newPrice, percentChange, absoluteChange) {
-    if (!this.alertLevels) return 1;
-
-    const category = this.getOddsCategory(oldPrice);
-    const isIncrease = newPrice > oldPrice;
-    const direction = isIncrease ? 'increase' : 'decrease';
-
-    // Vérifier niveau 3 (plus strict)
-    const level3Threshold = this.alertLevels.level3.thresholds[direction][category];
-    if (percentChange >= level3Threshold.percent && absoluteChange >= level3Threshold.absolute) {
-      return 3;
-    }
-
-    // Vérifier niveau 2
-    const level2Threshold = this.alertLevels.level2.thresholds[direction][category];
-    if (percentChange >= level2Threshold.percent && absoluteChange >= level2Threshold.absolute) {
-      return 2;
-    }
-
-    // Sinon niveau 1
-    return 1;
-  }
-
-  getAlertMeaning(level, direction) {
-    if (!this.alertLevels) return '';
-    
-    const levelConfig = this.alertLevels[`level${level}`];
-    if (!levelConfig || !levelConfig.meaning) return '';
-
-    return levelConfig.meaning[direction] || '';
-  }
-
-  detectOddsInversions(previousOdds, currentOdds) {
-    const inversions = [];
-
-    const previousEventsMap = new Map();
-    for (const event of previousOdds) {
-      previousEventsMap.set(event.id, event);
-    }
-
-    for (const currentEvent of currentOdds) {
-      const previousEvent = previousEventsMap.get(currentEvent.id);
-      
-      if (!previousEvent) continue;
-
-      for (const currentBookmaker of currentEvent.bookmakers || []) {
-        const previousBookmaker = (previousEvent.bookmakers || []).find(
-          b => b.key === currentBookmaker.key
-        );
-
-        if (!previousBookmaker) continue;
-
-        for (const currentMarket of currentBookmaker.markets || []) {
-          const previousMarket = (previousBookmaker.markets || []).find(
-            m => m.key === currentMarket.key
-          );
-
-          if (!previousMarket) continue;
-
-          // Pour détecter une inversion, on a besoin d'au moins 2 outcomes
-          if (currentMarket.outcomes.length < 2 || previousMarket.outcomes.length < 2) continue;
-
-          // Trouver le favori précédent (cote la plus basse)
-          const previousFavorite = previousMarket.outcomes.reduce((min, outcome) => 
-            outcome.price < min.price ? outcome : min
-          );
-
-          // Trouver le favori actuel
-          const currentFavorite = currentMarket.outcomes.reduce((min, outcome) => 
-            outcome.price < min.price ? outcome : min
-          );
-
-          // Vérifier si le favori a changé
-          if (previousFavorite.name !== currentFavorite.name) {
-            // Trouver la cote actuelle de l'ancien favori
-            const oldFavoriteCurrentOdds = currentMarket.outcomes.find(
-              o => o.name === previousFavorite.name
-            );
-
-            if (!oldFavoriteCurrentOdds) continue;
-
-            const oddsDifference = Math.abs(oldFavoriteCurrentOdds.price - currentFavorite.price);
-            
-            // Vérifier si on doit reporter cette inversion
-            const minDiff = this.alertLevels?.level3?.thresholds?.oddsInversion?.minOddsDifference || 0.30;
-            const majorThreshold = this.alertLevels?.level3?.thresholds?.oddsInversion?.majorThreshold || 0.50;
-            
-            if (oddsDifference >= minDiff) {
-              const isMajorInversion = oddsDifference >= majorThreshold;
-              
-              // Déterminer le message
-              let meaning = '🔄 Inversion de favori détectée';
-              if (this.alertLevels?.level3?.meaning) {
-                if (isMajorInversion && this.alertLevels.level3.meaning.major) {
-                  meaning = this.alertLevels.level3.meaning.major;
-                } else if (!isMajorInversion && this.alertLevels.level3.meaning.minor) {
-                  meaning = this.alertLevels.level3.meaning.minor;
-                }
-              }
-
-              inversions.push({
-                timestamp: new Date().toISOString(),
-                sport: currentEvent.sport_key,
-                eventId: currentEvent.id,
-                eventName: `${currentEvent.home_team} vs ${currentEvent.away_team}`,
-                commenceTime: currentEvent.commence_time,
-                bookmaker: currentBookmaker.title,
-                bookmakerKey: currentBookmaker.key,
-                market: currentMarket.key,
-                marketName: this.getMarketName(currentMarket.key),
-                outcome: currentFavorite.name,
-                oldPrice: previousFavorite.price,
-                newPrice: currentFavorite.price,
-                absoluteChange: oddsDifference.toFixed(2),
-                percentChange: ((oddsDifference / previousFavorite.price) * 100).toFixed(2),
-                direction: '🔄',
-                oldProb: (1 / previousFavorite.price * 100).toFixed(2),
-                newProb: (1 / currentFavorite.price * 100).toFixed(2),
-                isIncrease: 0,
-                alertLevel: 3,
-                category: 'inversion',
-                variationDirection: 'inversion',
-                meaning: meaning,
-                isOddsInversion: 1,
-                previousFavorite: previousFavorite.name,
-                newFavorite: currentFavorite.name
-              });
-
-              logger.warn(`🔥 ${isMajorInversion ? 'INVERSION MAJEURE' : 'Inversion'} détectée: ${currentEvent.home_team} vs ${currentEvent.away_team} - ${previousFavorite.name} (${previousFavorite.price}) → ${currentFavorite.name} (${currentFavorite.price}) [Δ${oddsDifference.toFixed(2)}]`);
-            }
-          }
+        // Si le pari est accepté, chercher le fixture_id et sauvegarder
+        if (bet) {
+          // Rechercher le fixture_id sur API-Football (async, non bloquant)
+          this.findAndSaveFixture(bet).catch(err => {
+            logger.warn('⚠️ Could not find fixture for bet', { error: err.message });
+          });
         }
       }
     }
 
-    return inversions;
+    return alerts;
   }
 
-  getMarketName(marketKey) {
-    const marketNames = {
-      'h2h': 'Match Winner',
-      'spreads': 'Point Spread',
-      'totals': 'Over/Under'
-    };
-    return marketNames[marketKey] || marketKey;
-  }
-
-  logMonitoringSummary() {
-    const strategy = config.monitoring.strategy || 'continuous';
-    
-    logger.info('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
-    logger.info(`📊 Résumé du Monitoring`);
-    logger.info(`   • Stratégie: ${strategy.toUpperCase()}`);
-    
-    if (strategy === 'pre-match') {
-      logger.info(`   • Ligues surveillées: ${this.sports.length}`);
-      logger.info(`   • Fenêtre pré-match: ${config.monitoring.preMatch.windowMinutes} minutes`);
-      logger.info(`   • Intervalle checks: ${config.monitoring.preMatch.intervalSeconds}s`);
-      logger.info(`   • Checks par match: ${config.monitoring.preMatch.maxChecks}`);
-      
-      if (config.monitoring.periodicScan.enabled) {
-        logger.info(`   • Scan périodique: tous les ${config.monitoring.periodicScan.intervalDays} jours à ${config.monitoring.periodicScan.hour}h00`);
-        logger.info(`   • Comparaison: ${config.monitoring.periodicScan.compareWithOpeningOdds ? 'avec cotes d\'ouverture' : 'désactivée'}`);
+  /**
+   * Cherche le fixture_id sur API-Football et sauvegarde le pari
+   */
+  async findAndSaveFixture(bet) {
+    try {
+      if (!process.env.USE_REAL_RESULTS || process.env.USE_REAL_RESULTS !== 'true') {
+        // Sauvegarder sans fixture_id
+        this.bankrollManager.saveBet(bet, null);
+        return;
       }
-      
-      // Estimation mensuelle avec scan périodique
-      const scansPerMonth = Math.floor(30 / (config.monitoring.periodicScan.intervalDays || 3));
-      const matchesPerWeek = 30; // Estimation
-      const matchesPerMonth = matchesPerWeek * 4;
-      const checksPerMatch = config.monitoring.preMatch.maxChecks;
-      const scanRequests = scansPerMonth * this.sports.length;
-      const monitorRequests = matchesPerMonth * checksPerMatch;
-      const totalRequests = scanRequests + monitorRequests;
-      
-      logger.info(`   • Estimation: ~${scansPerMonth} scans + ${matchesPerMonth} matchs/mois`);
-      logger.info(`   • Budget estimé: ~${totalRequests} requêtes/mois (scans: ${scanRequests}, monitoring: ${monitorRequests})`);
-    } else {
-      const totalSports = Object.values(this.competitions).flat().length;
-      logger.info(`   • Total sports: ${totalSports}`);
-      logger.info(`   • High priority: ${this.competitions.high.length}`);
-      logger.info(`   • Medium priority: ${this.competitions.medium.length}`);
-      logger.info(`   • Low priority: ${this.competitions.low.length}`);
+
+      // Chercher le match sur API-Football
+      const fixtureId = await apiFootball.findFixtureByMatch(
+        bet.home_team,
+        bet.away_team,
+        bet.commence_time
+      );
+
+      // Sauvegarder avec ou sans fixture_id
+      this.bankrollManager.saveBet(bet, fixtureId);
+
+    } catch (error) {
+      logger.error('❌ Error finding fixture', { error: error.message });
+      // Sauvegarder quand même sans fixture_id
+      this.bankrollManager.saveBet(bet, null);
     }
-    
-    logger.info(`   • Variation min: ${config.monitoring.minPercentChange}%`);
-    logger.info('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
-  }
-
-  sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-  }
-
-  async stop() {
-    if (!this.isRunning) {
-      logger.warn('⚠️ Le moniteur n\'est pas en cours d\'exécution');
-      return;
-    }
-
-    logger.info('🛑 Arrêt du monitoring...');
-    this.isRunning = false;
-
-    // Arrêter le scan périodique
-    if (this.periodicScanInterval) {
-      clearInterval(this.periodicScanInterval);
-      logger.info('✅ Scan périodique arrêté');
-    }
-
-    // Arrêter tous les monitors actifs
-    for (const [eventId, monitorInfo] of this.activeMonitors) {
-      if (monitorInfo.timeoutId) {
-        clearTimeout(monitorInfo.timeoutId);
-      }
-      if (monitorInfo.intervalId) {
-        clearInterval(monitorInfo.intervalId);
-      }
-      logger.info(`✅ Monitor arrêté: ${monitorInfo.homeTeam} vs ${monitorInfo.awayTeam}`);
-    }
-
-    this.activeMonitors.clear();
-
-    // Arrêter tous les intervalles (mode continu)
-    for (const [priority, intervalId] of this.intervals) {
-      clearInterval(intervalId);
-      logger.info(`✅ Intervalle ${priority} arrêté`);
-    }
-
-    this.intervals.clear();
-    logger.info('✅ Monitoring arrêté');
   }
 }
 

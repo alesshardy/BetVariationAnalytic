@@ -20,7 +20,8 @@ class DB {
       this.db.pragma('journal_mode = WAL');
 
       this.createTables();
-      this.migrateSchema(); // Ajouter cette ligne
+      this.migrateSchema();
+      this.createIndexes(); // Créer les index après la migration
       logger.info('✅ Base de données SQLite initialisée');
     } catch (error) {
       logger.error('❌ Erreur lors de l\'initialisation de la base de données:', error);
@@ -77,6 +78,37 @@ class DB {
       )
     `);
 
+    // Table des paris (betting simulation)
+    this.db.exec(`
+      CREATE TABLE IF NOT EXISTS bets (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        timestamp TEXT NOT NULL,
+        event_name TEXT NOT NULL,
+        sport TEXT NOT NULL,
+        bookmaker TEXT NOT NULL,
+        outcome TEXT NOT NULL,
+        original_odds REAL NOT NULL,
+        adjusted_odds REAL NOT NULL,
+        alert_level INTEGER NOT NULL,
+        variation REAL NOT NULL,
+        direction TEXT NOT NULL,
+        bet_size REAL NOT NULL,
+        result TEXT,
+        profit REAL,
+        bankroll REAL NOT NULL,
+        roi REAL,
+        commence_time TEXT NOT NULL,
+        home_team TEXT,
+        away_team TEXT,
+        fixture_id INTEGER,
+        home_score INTEGER,
+        away_score INTEGER,
+        winner TEXT,
+        result_updated_at DATETIME,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+      )
+    `);
+
     // Table de tracking d'utilisation API
     this.db.exec(`
       CREATE TABLE IF NOT EXISTS api_usage (
@@ -86,7 +118,9 @@ class DB {
         timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
       )
     `);
+  }
 
+  createIndexes() {
     // Index pour améliorer les performances
     this.db.exec(`
       CREATE INDEX IF NOT EXISTS idx_events_sport ON events(sport);
@@ -95,6 +129,9 @@ class DB {
       CREATE INDEX IF NOT EXISTS idx_alerts_sport ON alerts(sport);
       CREATE INDEX IF NOT EXISTS idx_alerts_level ON alerts(alert_level);
       CREATE INDEX IF NOT EXISTS idx_alerts_inversion ON alerts(is_odds_inversion);
+      CREATE INDEX IF NOT EXISTS idx_bets_result ON bets(result);
+      CREATE INDEX IF NOT EXISTS idx_bets_fixture_id ON bets(fixture_id);
+      CREATE INDEX IF NOT EXISTS idx_bets_commence_time ON bets(commence_time);
     `);
   }
 

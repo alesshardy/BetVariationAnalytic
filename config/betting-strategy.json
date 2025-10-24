@@ -1,0 +1,113 @@
+{
+  "bankroll": {
+    "initial": 1000,
+    "currency": "EUR",
+    "minBet": 5,
+    "maxBet": 100,
+    "preservationThreshold": 0.5
+  },
+  "strategies": {
+    "conservative": {
+      "name": "Conservateur",
+      "description": "Mises prudentes, protection maximale de la bankroll",
+      "level1": {
+        "enabled": false,
+        "percentBankroll": 0,
+        "comment": "Niveau 1 désactivé (trop de bruit)"
+      },
+      "level2": {
+        "enabled": true,
+        "percentBankroll": 2,
+        "maxBet": 30,
+        "minOdds": 1.50,
+        "maxOdds": 3.00,
+        "comment": "2% de la bankroll sur variations importantes"
+      },
+      "level3": {
+        "enabled": true,
+        "percentBankroll": 5,
+        "maxBet": 50,
+        "minOdds": 1.30,
+        "maxOdds": 4.00,
+        "comment": "5% sur inversions majeures"
+      }
+    },
+    "aggressive": {
+      "name": "Agressif",
+      "description": "Mises importantes pour maximiser les gains",
+      "level1": {
+        "enabled": true,
+        "percentBankroll": 1,
+        "maxBet": 20,
+        "minOdds": 1.40,
+        "maxOdds": 5.00
+      },
+      "level2": {
+        "enabled": true,
+        "percentBankroll": 3,
+        "maxBet": 50,
+        "minOdds": 1.30,
+        "maxOdds": 6.00
+      },
+      "level3": {
+        "enabled": true,
+        "percentBankroll": 7,
+        "maxBet": 100,
+        "minOdds": 1.20,
+        "maxOdds": 8.00
+      }
+    },
+    "balanced": {
+      "name": "Équilibré",
+      "description": "Compromis entre sécurité et rentabilité",
+      "level1": {
+        "enabled": false,
+        "percentBankroll": 0
+      },
+      "level2": {
+        "enabled": true,
+        "percentBankroll": 2.5,
+        "maxBet": 40,
+        "minOdds": 1.50,
+        "maxOdds": 3.50
+      },
+      "level3": {
+        "enabled": true,
+        "percentBankroll": 6,
+        "maxBet": 75,
+        "minOdds": 1.30,
+        "maxOdds": 4.50
+      }
+    }
+  },
+  "rules": {
+    "martingale": false,
+    "stopLoss": {
+      "enabled": true,
+      "threshold": 0.3,
+      "comment": "Arrêter si bankroll descend à 30%"
+    },
+    "takeProfit": {
+      "enabled": true,
+      "threshold": 2.0,
+      "action": "reduce_stakes",
+      "comment": "Réduire les mises si bankroll × 2"
+    },
+    "maxDailyRisk": 0.10,
+    "maxBetsPerDay": 5,
+    "cooldownAfterLoss": 2
+  },
+  "simulation": {
+    "winRate": {
+      "level1": 0.48,
+      "level2": 0.52,
+      "level3": 0.58,
+      "comment": "Taux de réussite estimé par niveau d'alerte"
+    },
+    "oddsAdjustment": {
+      "increase": -0.05,
+      "decrease": 0.05,
+      "comment": "Si cote augmente: équipe perd confiance (-5%), si baisse: gagne confiance (+5%)"
+    }
+  }
+}

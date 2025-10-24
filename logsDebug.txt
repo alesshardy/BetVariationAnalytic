@@ -1,0 +1,452 @@
+📋 Logs du serveur: 
+ssh root@209.38.241.107 "cd /root/BetVariationAnalytic && docker-compose logs -f"
+time="2025-10-20T10:36:06Z" level=warning msg="/root/BetVariationAnalytic/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+bet-variation-analytic  | 2025-10-20 10:35:49 info: 📢 1 canal(aux) de notification activé(s)
+bet-variation-analytic  | 2025-10-20 10:35:49 info: 📋 3 niveaux de priorité chargés
+bet-variation-analytic  | 2025-10-20 10:35:49 info: 🎯 Configuration des niveaux d'alerte chargée
+bet-variation-analytic  | 2025-10-20 10:35:49 info: ⚽ 8 ligues activées pour le monitoring
+bet-variation-analytic  | 2025-10-20 10:35:49 info: 💰 Bankroll Manager initialized
+bet-variation-analytic  | 2025-10-20 10:35:49 info: 💰 Betting simulation enabled
+bet-variation-analytic  | 2025-10-20 10:35:49 info: 🚀 Démarrage de BetVariationAnalytic...
+bet-variation-analytic  | 2025-10-20 10:35:49 info: 📊 Budget API: 500 requêtes/mois
+bet-variation-analytic  | 2025-10-20 10:35:49 info: 📢 1 canal(aux) de notification activé(s)
+bet-variation-analytic  | 2025-10-20 10:35:49 info: 🔧 Initialisation du SmartMonitor...
+bet-variation-analytic  | 2025-10-20 10:35:49 info: ✅ Migration du schéma terminée
+bet-variation-analytic  | 2025-10-20 10:35:49 info: ✅ Base de données SQLite initialisée
+bet-variation-analytic  | 2025-10-20 10:35:49 info: ✅ SmartMonitor initialisé
+bet-variation-analytic  | 2025-10-20 10:35:49 info: 🚀 Démarrage du monitoring en mode: PRE-MATCH
+bet-variation-analytic  | 2025-10-20 10:35:49 info: ⏰ Mode pré-match: Scan périodique tous les 3 jours + monitoring intensif 15min avant match
+bet-variation-analytic  | 2025-10-20 10:35:49 info: 🔍 ═══════════════════════════════════════════════════════
+bet-variation-analytic  | 2025-10-20 10:35:49 info: 🔍 SCAN PÉRIODIQUE: Découverte et tracking des matchs
+bet-variation-analytic  | 2025-10-20 10:35:49 info: 🔍 ═══════════════════════════════════════════════════════
+bet-variation-analytic  | 2025-10-20 10:35:49 info: 📡 Scan de soccer_epl...
+bet-variation-analytic  | 2025-10-20 10:35:49 info: 🔍 Requête: https://api.the-odds-api.com/v4/sports/soccer_epl/odds
+bet-variation-analytic  | 2025-10-20 10:35:49 info: 📋 Params: {"apiKey":"5985c98be973e421db9c408d2cee0242","regions":"eu","markets":"h2h,spreads,totals","oddsFormat":"decimal","dateFormat":"iso"}
+bet-variation-analytic  | 2025-10-20 10:35:49 info: 📅 Prochain scan périodique: 23/10/2025 08:00:00 (dans 69h)
+bet-variation-analytic  | 2025-10-20 10:35:49 info: 🔄 Fréquence des scans: tous les 3 jours
+bet-variation-analytic  | 2025-10-20 10:35:49 info: 🚀 Starting results fetcher (check every 24h)
+bet-variation-analytic  | 2025-10-20 10:35:49 info: ✅ Results fetcher started
+bet-variation-analytic  | 2025-10-20 10:35:49 info: ✅ Application démarrée avec succès
+bet-variation-analytic  | 2025-10-20 10:35:49 info: 🌐 Dashboard accessible sur http://0.0.0.0:3000
+bet-variation-analytic  | 2025-10-20 10:35:49 info: 📊 soccer_epl: 21 événements | Budget: 27/500
+bet-variation-analytic  | 2025-10-20 10:35:49 info: ⏰ Planifié: West Ham United vs Brentford
+bet-variation-analytic  | 2025-10-20 10:35:49 info:    📅 Début match: 20/10/2025 19:00:00
+bet-variation-analytic  | 2025-10-20 10:35:49 info:    🚨 Monitoring à: 20/10/2025 18:50:00 (dans 494 min)
+bet-variation-analytic  | 2025-10-20 10:35:49 info:    ✨ Nouveau: West Ham United vs Brentford (20/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:49 info: ⏰ Planifié: Leeds United vs West Ham United
+bet-variation-analytic  | 2025-10-20 10:35:49 info:    📅 Début match: 24/10/2025 19:00:00
+bet-variation-analytic  | 2025-10-20 10:35:49 info:    🚨 Monitoring à: 24/10/2025 18:50:00 (dans 6254 min)
+bet-variation-analytic  | 2025-10-20 10:35:49 info:    ✨ Nouveau: Leeds United vs West Ham United (24/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:49 info: ⏰ Planifié: Chelsea vs Sunderland
+bet-variation-analytic  | 2025-10-20 10:35:49 info:    📅 Début match: 25/10/2025 14:00:00
+bet-variation-analytic  | 2025-10-20 10:35:49 info:    🚨 Monitoring à: 25/10/2025 13:50:00 (dans 7394 min)
+bet-variation-analytic  | 2025-10-20 10:35:49 info:    ✨ Nouveau: Chelsea vs Sunderland (25/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:49 info: ⏰ Planifié: Newcastle United vs Fulham
+bet-variation-analytic  | 2025-10-20 10:35:49 info:    📅 Début match: 25/10/2025 14:00:00
+bet-variation-analytic  | 2025-10-20 10:35:49 info:    🚨 Monitoring à: 25/10/2025 13:50:00 (dans 7394 min)
+bet-variation-analytic  | 2025-10-20 10:35:49 info:    ✨ Nouveau: Newcastle United vs Fulham (25/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:49 info: ⏰ Planifié: Manchester United vs Brighton and Hove Albion
+bet-variation-analytic  | 2025-10-20 10:35:49 info:    📅 Début match: 25/10/2025 16:30:00
+bet-variation-analytic  | 2025-10-20 10:35:49 info:    🚨 Monitoring à: 25/10/2025 16:20:00 (dans 7544 min)
+bet-variation-analytic  | 2025-10-20 10:35:49 info:    ✨ Nouveau: Manchester United vs Brighton and Hove Albion (25/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:49 info: ⏰ Planifié: Brentford vs Liverpool
+bet-variation-analytic  | 2025-10-20 10:35:49 info:    📅 Début match: 25/10/2025 19:00:00
+bet-variation-analytic  | 2025-10-20 10:35:49 info:    🚨 Monitoring à: 25/10/2025 18:50:00 (dans 7694 min)
+bet-variation-analytic  | 2025-10-20 10:35:49 info:    ✨ Nouveau: Brentford vs Liverpool (25/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:49 info: ⏰ Planifié: Arsenal vs Crystal Palace
+bet-variation-analytic  | 2025-10-20 10:35:49 info:    📅 Début match: 26/10/2025 14:00:00
+bet-variation-analytic  | 2025-10-20 10:35:49 info:    🚨 Monitoring à: 26/10/2025 13:50:00 (dans 8834 min)
+bet-variation-analytic  | 2025-10-20 10:35:49 info:    ✨ Nouveau: Arsenal vs Crystal Palace (26/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:49 info: ⏰ Planifié: Aston Villa vs Manchester City
+bet-variation-analytic  | 2025-10-20 10:35:49 info:    📅 Début match: 26/10/2025 14:00:00
+bet-variation-analytic  | 2025-10-20 10:35:49 info:    🚨 Monitoring à: 26/10/2025 13:50:00 (dans 8834 min)
+bet-variation-analytic  | 2025-10-20 10:35:49 info:    ✨ Nouveau: Aston Villa vs Manchester City (26/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:49 info: ⏰ Planifié: Bournemouth vs Nottingham Forest
+bet-variation-analytic  | 2025-10-20 10:35:49 info:    📅 Début match: 26/10/2025 14:00:00
+bet-variation-analytic  | 2025-10-20 10:35:49 info:    🚨 Monitoring à: 26/10/2025 13:50:00 (dans 8834 min)
+bet-variation-analytic  | 2025-10-20 10:35:49 info:    ✨ Nouveau: Bournemouth vs Nottingham Forest (26/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:49 info: ⏰ Planifié: Wolverhampton Wanderers vs Burnley
+bet-variation-analytic  | 2025-10-20 10:35:49 info:    📅 Début match: 26/10/2025 14:00:00
+bet-variation-analytic  | 2025-10-20 10:35:49 info:    🚨 Monitoring à: 26/10/2025 13:50:00 (dans 8834 min)
+bet-variation-analytic  | 2025-10-20 10:35:49 info:    ✨ Nouveau: Wolverhampton Wanderers vs Burnley (26/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:49 info: ⏰ Planifié: Everton vs Tottenham Hotspur
+bet-variation-analytic  | 2025-10-20 10:35:49 info:    📅 Début match: 26/10/2025 16:30:00
+bet-variation-analytic  | 2025-10-20 10:35:49 info:    🚨 Monitoring à: 26/10/2025 16:20:00 (dans 8984 min)
+bet-variation-analytic  | 2025-10-20 10:35:49 info:    ✨ Nouveau: Everton vs Tottenham Hotspur (26/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:49 error: ❌ Erreur lors du scan de soccer_epl:
+bet-variation-analytic  | 2025-10-20 10:35:49 info: 📡 Scan de soccer_france_ligue_one...
+bet-variation-analytic  | 2025-10-20 10:35:49 info: 🔍 Requête: https://api.the-odds-api.com/v4/sports/soccer_france_ligue_one/odds
+bet-variation-analytic  | 2025-10-20 10:35:49 info: 📋 Params: {"apiKey":"5985c98be973e421db9c408d2cee0242","regions":"eu","markets":"h2h,spreads,totals","oddsFormat":"decimal","dateFormat":"iso"}
+bet-variation-analytic  | 2025-10-20 10:35:50 info: 📊 soccer_france_ligue_one: 18 événements | Budget: 30/500
+bet-variation-analytic  | 2025-10-20 10:35:50 info: ⏰ Planifié: Paris FC vs Nantes
+bet-variation-analytic  | 2025-10-20 10:35:50 info:    📅 Début match: 24/10/2025 18:45:00
+bet-variation-analytic  | 2025-10-20 10:35:50 info:    🚨 Monitoring à: 24/10/2025 18:35:00 (dans 6239 min)
+bet-variation-analytic  | 2025-10-20 10:35:50 info:    ✨ Nouveau: Paris FC vs Nantes (24/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:50 info: ⏰ Planifié: Brest vs Paris Saint Germain
+bet-variation-analytic  | 2025-10-20 10:35:50 info:    📅 Début match: 25/10/2025 15:00:00
+bet-variation-analytic  | 2025-10-20 10:35:50 info:    🚨 Monitoring à: 25/10/2025 14:50:00 (dans 7454 min)
+bet-variation-analytic  | 2025-10-20 10:35:50 info:    ✨ Nouveau: Brest vs Paris Saint Germain (25/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:50 info: ⏰ Planifié: AS Monaco vs Toulouse
+bet-variation-analytic  | 2025-10-20 10:35:50 info:    📅 Début match: 25/10/2025 17:00:00
+bet-variation-analytic  | 2025-10-20 10:35:50 info:    🚨 Monitoring à: 25/10/2025 16:50:00 (dans 7574 min)
+bet-variation-analytic  | 2025-10-20 10:35:50 info:    ✨ Nouveau: AS Monaco vs Toulouse (25/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:50 info: ⏰ Planifié: RC Lens vs Marseille
+bet-variation-analytic  | 2025-10-20 10:35:50 info:    📅 Début match: 25/10/2025 19:05:00
+bet-variation-analytic  | 2025-10-20 10:35:50 info:    🚨 Monitoring à: 25/10/2025 18:55:00 (dans 7699 min)
+bet-variation-analytic  | 2025-10-20 10:35:50 info:    ✨ Nouveau: RC Lens vs Marseille (25/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:50 info: ⏰ Planifié: Lille vs Metz
+bet-variation-analytic  | 2025-10-20 10:35:50 info:    📅 Début match: 26/10/2025 14:00:00
+bet-variation-analytic  | 2025-10-20 10:35:50 info:    🚨 Monitoring à: 26/10/2025 13:50:00 (dans 8834 min)
+bet-variation-analytic  | 2025-10-20 10:35:50 info:    ✨ Nouveau: Lille vs Metz (26/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:50 info: ⏰ Planifié: Angers vs Lorient
+bet-variation-analytic  | 2025-10-20 10:35:50 info:    📅 Début match: 26/10/2025 16:15:00
+bet-variation-analytic  | 2025-10-20 10:35:50 info:    🚨 Monitoring à: 26/10/2025 16:05:00 (dans 8969 min)
+bet-variation-analytic  | 2025-10-20 10:35:50 info:    ✨ Nouveau: Angers vs Lorient (26/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:50 info: ⏰ Planifié: Auxerre vs Le Havre
+bet-variation-analytic  | 2025-10-20 10:35:50 info:    📅 Début match: 26/10/2025 16:15:00
+bet-variation-analytic  | 2025-10-20 10:35:50 info:    🚨 Monitoring à: 26/10/2025 16:05:00 (dans 8969 min)
+bet-variation-analytic  | 2025-10-20 10:35:50 info:    ✨ Nouveau: Auxerre vs Le Havre (26/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:50 info: ⏰ Planifié: Rennes vs Nice
+bet-variation-analytic  | 2025-10-20 10:35:50 info:    📅 Début match: 26/10/2025 16:15:00
+bet-variation-analytic  | 2025-10-20 10:35:50 info:    🚨 Monitoring à: 26/10/2025 16:05:00 (dans 8969 min)
+bet-variation-analytic  | 2025-10-20 10:35:50 info:    ✨ Nouveau: Rennes vs Nice (26/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:50 info: ⏰ Planifié: Lyon vs Strasbourg
+bet-variation-analytic  | 2025-10-20 10:35:50 info:    📅 Début match: 26/10/2025 19:45:00
+bet-variation-analytic  | 2025-10-20 10:35:50 info:    🚨 Monitoring à: 26/10/2025 19:35:00 (dans 9179 min)
+bet-variation-analytic  | 2025-10-20 10:35:50 info:    ✨ Nouveau: Lyon vs Strasbourg (26/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:50 error: ❌ Erreur lors du scan de soccer_france_ligue_one:
+bet-variation-analytic  | 2025-10-20 10:35:50 info: 📡 Scan de soccer_spain_la_liga...
+bet-variation-analytic  | 2025-10-20 10:35:50 info: 🔍 Requête: https://api.the-odds-api.com/v4/sports/soccer_spain_la_liga/odds
+bet-variation-analytic  | 2025-10-20 10:35:50 info: 📋 Params: {"apiKey":"5985c98be973e421db9c408d2cee0242","regions":"eu","markets":"h2h,spreads,totals","oddsFormat":"decimal","dateFormat":"iso"}
+bet-variation-analytic  | 2025-10-20 10:35:50 info: 📊 soccer_spain_la_liga: 21 événements | Budget: 33/500
+bet-variation-analytic  | 2025-10-20 10:35:50 info: ⏰ Planifié: Alavés vs Valencia
+bet-variation-analytic  | 2025-10-20 10:35:50 info:    📅 Début match: 20/10/2025 19:00:00
+bet-variation-analytic  | 2025-10-20 10:35:50 info:    🚨 Monitoring à: 20/10/2025 18:50:00 (dans 494 min)
+bet-variation-analytic  | 2025-10-20 10:35:50 info:    ✨ Nouveau: Alavés vs Valencia (20/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:50 info: ⏰ Planifié: Real Sociedad vs Sevilla
+bet-variation-analytic  | 2025-10-20 10:35:50 info:    📅 Début match: 24/10/2025 19:00:00
+bet-variation-analytic  | 2025-10-20 10:35:50 info:    🚨 Monitoring à: 24/10/2025 18:50:00 (dans 6254 min)
+bet-variation-analytic  | 2025-10-20 10:35:50 info:    ✨ Nouveau: Real Sociedad vs Sevilla (24/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:50 info: ⏰ Planifié: Girona vs Oviedo
+bet-variation-analytic  | 2025-10-20 10:35:50 info:    📅 Début match: 25/10/2025 12:00:00
+bet-variation-analytic  | 2025-10-20 10:35:50 info:    🚨 Monitoring à: 25/10/2025 11:50:00 (dans 7274 min)
+bet-variation-analytic  | 2025-10-20 10:35:50 info:    ✨ Nouveau: Girona vs Oviedo (25/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:50 info: ⏰ Planifié: Espanyol vs Elche CF
+bet-variation-analytic  | 2025-10-20 10:35:50 info:    📅 Début match: 25/10/2025 14:15:00
+bet-variation-analytic  | 2025-10-20 10:35:50 info:    🚨 Monitoring à: 25/10/2025 14:05:00 (dans 7409 min)
+bet-variation-analytic  | 2025-10-20 10:35:50 info:    ✨ Nouveau: Espanyol vs Elche CF (25/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:50 info: ⏰ Planifié: Athletic Bilbao vs Getafe
+bet-variation-analytic  | 2025-10-20 10:35:50 info:    📅 Début match: 25/10/2025 16:30:00
+bet-variation-analytic  | 2025-10-20 10:35:50 info:    🚨 Monitoring à: 25/10/2025 16:20:00 (dans 7544 min)
+bet-variation-analytic  | 2025-10-20 10:35:50 info:    ✨ Nouveau: Athletic Bilbao vs Getafe (25/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:50 info: ⏰ Planifié: Valencia vs Villarreal
+bet-variation-analytic  | 2025-10-20 10:35:50 info:    📅 Début match: 25/10/2025 19:00:00
+bet-variation-analytic  | 2025-10-20 10:35:50 info:    🚨 Monitoring à: 25/10/2025 18:50:00 (dans 7694 min)
+bet-variation-analytic  | 2025-10-20 10:35:50 info:    ✨ Nouveau: Valencia vs Villarreal (25/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:50 info: ⏰ Planifié: Mallorca vs Levante
+bet-variation-analytic  | 2025-10-20 10:35:50 info:    📅 Début match: 26/10/2025 13:00:00
+bet-variation-analytic  | 2025-10-20 10:35:50 info:    🚨 Monitoring à: 26/10/2025 12:50:00 (dans 8774 min)
+bet-variation-analytic  | 2025-10-20 10:35:50 info:    ✨ Nouveau: Mallorca vs Levante (26/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:50 info: ⏰ Planifié: Real Madrid vs Barcelona
+bet-variation-analytic  | 2025-10-20 10:35:50 info:    📅 Début match: 26/10/2025 15:15:00
+bet-variation-analytic  | 2025-10-20 10:35:50 info:    🚨 Monitoring à: 26/10/2025 15:05:00 (dans 8909 min)
+bet-variation-analytic  | 2025-10-20 10:35:50 info:    ✨ Nouveau: Real Madrid vs Barcelona (26/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:50 info: ⏰ Planifié: CA Osasuna vs Celta Vigo
+bet-variation-analytic  | 2025-10-20 10:35:50 info:    📅 Début match: 26/10/2025 17:30:00
+bet-variation-analytic  | 2025-10-20 10:35:50 info:    🚨 Monitoring à: 26/10/2025 17:20:00 (dans 9044 min)
+bet-variation-analytic  | 2025-10-20 10:35:50 info:    ✨ Nouveau: CA Osasuna vs Celta Vigo (26/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:50 info: ⏰ Planifié: Rayo Vallecano vs Alavés
+bet-variation-analytic  | 2025-10-20 10:35:50 info:    📅 Début match: 26/10/2025 20:00:00
+bet-variation-analytic  | 2025-10-20 10:35:50 info:    🚨 Monitoring à: 26/10/2025 19:50:00 (dans 9194 min)
+bet-variation-analytic  | 2025-10-20 10:35:50 info:    ✨ Nouveau: Rayo Vallecano vs Alavés (26/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:50 error: ❌ Erreur lors du scan de soccer_spain_la_liga:
+bet-variation-analytic  | 2025-10-20 10:35:50 info: 📡 Scan de soccer_germany_bundesliga...
+bet-variation-analytic  | 2025-10-20 10:35:50 info: 🔍 Requête: https://api.the-odds-api.com/v4/sports/soccer_germany_bundesliga/odds
+bet-variation-analytic  | 2025-10-20 10:35:50 info: 📋 Params: {"apiKey":"5985c98be973e421db9c408d2cee0242","regions":"eu","markets":"h2h,spreads,totals","oddsFormat":"decimal","dateFormat":"iso"}
+bet-variation-analytic  | 2025-10-20 10:35:51 info: 📊 soccer_germany_bundesliga: 18 événements | Budget: 36/500
+bet-variation-analytic  | 2025-10-20 10:35:51 info: ⏰ Planifié: Werder Bremen vs Union Berlin
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    📅 Début match: 24/10/2025 18:30:00
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    🚨 Monitoring à: 24/10/2025 18:20:00 (dans 6224 min)
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    ✨ Nouveau: Werder Bremen vs Union Berlin (24/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:51 info: ⏰ Planifié: TSG Hoffenheim vs 1. FC Heidenheim
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    📅 Début match: 25/10/2025 13:30:00
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    🚨 Monitoring à: 25/10/2025 13:20:00 (dans 7364 min)
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    ✨ Nouveau: TSG Hoffenheim vs 1. FC Heidenheim (25/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:51 info: ⏰ Planifié: Augsburg vs RB Leipzig
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    📅 Début match: 25/10/2025 13:30:00
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    🚨 Monitoring à: 25/10/2025 13:20:00 (dans 7364 min)
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    ✨ Nouveau: Augsburg vs RB Leipzig (25/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:51 info: ⏰ Planifié: Borussia Monchengladbach vs Bayern Munich
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    📅 Début match: 25/10/2025 13:30:00
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    🚨 Monitoring à: 25/10/2025 13:20:00 (dans 7364 min)
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    ✨ Nouveau: Borussia Monchengladbach vs Bayern Munich (25/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:51 info: ⏰ Planifié: Eintracht Frankfurt vs FC St. Pauli
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    📅 Début match: 25/10/2025 13:30:00
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    🚨 Monitoring à: 25/10/2025 13:20:00 (dans 7364 min)
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    ✨ Nouveau: Eintracht Frankfurt vs FC St. Pauli (25/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:51 info: ⏰ Planifié: Hamburger SV vs VfL Wolfsburg
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    📅 Début match: 25/10/2025 13:30:00
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    🚨 Monitoring à: 25/10/2025 13:20:00 (dans 7364 min)
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    ✨ Nouveau: Hamburger SV vs VfL Wolfsburg (25/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:51 info: ⏰ Planifié: Borussia Dortmund vs 1. FC Köln
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    📅 Début match: 25/10/2025 16:30:00
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    🚨 Monitoring à: 25/10/2025 16:20:00 (dans 7544 min)
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    ✨ Nouveau: Borussia Dortmund vs 1. FC Köln (25/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:51 info: ⏰ Planifié: Bayer Leverkusen vs SC Freiburg
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    📅 Début match: 26/10/2025 14:30:00
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    🚨 Monitoring à: 26/10/2025 14:20:00 (dans 8864 min)
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    ✨ Nouveau: Bayer Leverkusen vs SC Freiburg (26/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:51 info: ⏰ Planifié: VfB Stuttgart vs FSV Mainz 05
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    📅 Début match: 26/10/2025 16:30:00
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    🚨 Monitoring à: 26/10/2025 16:20:00 (dans 8984 min)
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    ✨ Nouveau: VfB Stuttgart vs FSV Mainz 05 (26/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:51 error: ❌ Erreur lors du scan de soccer_germany_bundesliga:
+bet-variation-analytic  | 2025-10-20 10:35:51 info: 📡 Scan de soccer_italy_serie_a...
+bet-variation-analytic  | 2025-10-20 10:35:51 info: 🔍 Requête: https://api.the-odds-api.com/v4/sports/soccer_italy_serie_a/odds
+bet-variation-analytic  | 2025-10-20 10:35:51 info: 📋 Params: {"apiKey":"5985c98be973e421db9c408d2cee0242","regions":"eu","markets":"h2h,spreads,totals","oddsFormat":"decimal","dateFormat":"iso"}
+bet-variation-analytic  | 2025-10-20 10:35:51 info: 📊 soccer_italy_serie_a: 21 événements | Budget: 39/500
+bet-variation-analytic  | 2025-10-20 10:35:51 info: ⏰ Planifié: Cremonese vs Udinese
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    📅 Début match: 20/10/2025 18:45:00
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    🚨 Monitoring à: 20/10/2025 18:35:00 (dans 479 min)
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    ✨ Nouveau: Cremonese vs Udinese (20/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:51 info: ⏰ Planifié: AC Milan vs Pisa
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    📅 Début match: 24/10/2025 18:45:00
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    🚨 Monitoring à: 24/10/2025 18:35:00 (dans 6239 min)
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    ✨ Nouveau: AC Milan vs Pisa (24/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:51 info: ⏰ Planifié: Parma vs Como
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    📅 Début match: 25/10/2025 13:00:00
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    🚨 Monitoring à: 25/10/2025 12:50:00 (dans 7334 min)
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    ✨ Nouveau: Parma vs Como (25/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:51 info: ⏰ Planifié: Udinese vs Lecce
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    📅 Début match: 25/10/2025 13:00:00
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    🚨 Monitoring à: 25/10/2025 12:50:00 (dans 7334 min)
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    ✨ Nouveau: Udinese vs Lecce (25/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:51 info: ⏰ Planifié: Napoli vs Inter Milan
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    📅 Début match: 25/10/2025 16:00:00
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    🚨 Monitoring à: 25/10/2025 15:50:00 (dans 7514 min)
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    ✨ Nouveau: Napoli vs Inter Milan (25/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:51 info: ⏰ Planifié: Cremonese vs Atalanta BC
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    📅 Début match: 25/10/2025 18:45:00
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    🚨 Monitoring à: 25/10/2025 18:35:00 (dans 7679 min)
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    ✨ Nouveau: Cremonese vs Atalanta BC (25/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:51 info: ⏰ Planifié: Torino vs Genoa
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    📅 Début match: 26/10/2025 11:30:00
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    🚨 Monitoring à: 26/10/2025 11:20:00 (dans 8684 min)
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    ✨ Nouveau: Torino vs Genoa (26/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:51 info: ⏰ Planifié: Sassuolo vs AS Roma
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    📅 Début match: 26/10/2025 14:00:00
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    🚨 Monitoring à: 26/10/2025 13:50:00 (dans 8834 min)
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    ✨ Nouveau: Sassuolo vs AS Roma (26/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:51 info: ⏰ Planifié: Hellas Verona vs Cagliari
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    📅 Début match: 26/10/2025 14:00:00
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    🚨 Monitoring à: 26/10/2025 13:50:00 (dans 8834 min)
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    ✨ Nouveau: Hellas Verona vs Cagliari (26/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:51 info: ⏰ Planifié: Fiorentina vs Bologna
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    📅 Début match: 26/10/2025 17:00:00
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    🚨 Monitoring à: 26/10/2025 16:50:00 (dans 9014 min)
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    ✨ Nouveau: Fiorentina vs Bologna (26/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:51 info: ⏰ Planifié: Lazio vs Juventus
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    📅 Début match: 26/10/2025 19:45:00
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    🚨 Monitoring à: 26/10/2025 19:35:00 (dans 9179 min)
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    ✨ Nouveau: Lazio vs Juventus (26/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:51 error: ❌ Erreur lors du scan de soccer_italy_serie_a:
+bet-variation-analytic  | 2025-10-20 10:35:51 info: 📡 Scan de soccer_uefa_champs_league...
+bet-variation-analytic  | 2025-10-20 10:35:51 info: 🔍 Requête: https://api.the-odds-api.com/v4/sports/soccer_uefa_champs_league/odds
+bet-variation-analytic  | 2025-10-20 10:35:51 info: 📋 Params: {"apiKey":"5985c98be973e421db9c408d2cee0242","regions":"eu","markets":"h2h,spreads,totals","oddsFormat":"decimal","dateFormat":"iso"}
+bet-variation-analytic  | 2025-10-20 10:35:51 info: 📊 soccer_uefa_champs_league: 18 événements | Budget: 42/500
+bet-variation-analytic  | 2025-10-20 10:35:51 info: ⏰ Planifié: Barcelona vs Olympiakos Piraeus
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    📅 Début match: 21/10/2025 16:45:00
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    🚨 Monitoring à: 21/10/2025 16:35:00 (dans 1799 min)
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    ✨ Nouveau: Barcelona vs Olympiakos Piraeus (21/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:51 info: ⏰ Planifié: FC Kairat vs Pafos FC
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    📅 Début match: 21/10/2025 16:45:00
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    🚨 Monitoring à: 21/10/2025 16:35:00 (dans 1799 min)
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    ✨ Nouveau: FC Kairat vs Pafos FC (21/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:51 info: ⏰ Planifié: Arsenal vs Atlético Madrid
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    📅 Début match: 21/10/2025 19:00:00
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    🚨 Monitoring à: 21/10/2025 18:50:00 (dans 1934 min)
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    ✨ Nouveau: Arsenal vs Atlético Madrid (21/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:51 info: ⏰ Planifié: Bayer Leverkusen vs Paris Saint Germain
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    📅 Début match: 21/10/2025 19:00:00
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    🚨 Monitoring à: 21/10/2025 18:50:00 (dans 1934 min)
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    ✨ Nouveau: Bayer Leverkusen vs Paris Saint Germain (21/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:51 info: ⏰ Planifié: Newcastle United vs Benfica
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    📅 Début match: 21/10/2025 19:00:00
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    🚨 Monitoring à: 21/10/2025 18:50:00 (dans 1934 min)
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    ✨ Nouveau: Newcastle United vs Benfica (21/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:51 info: ⏰ Planifié: FC Copenhagen vs Borussia Dortmund
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    📅 Début match: 21/10/2025 19:00:00
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    🚨 Monitoring à: 21/10/2025 18:50:00 (dans 1934 min)
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    ✨ Nouveau: FC Copenhagen vs Borussia Dortmund (21/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:51 info: ⏰ Planifié: Union Saint-Gilloise vs Inter Milan
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    📅 Début match: 21/10/2025 19:00:00
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    🚨 Monitoring à: 21/10/2025 18:50:00 (dans 1934 min)
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    ✨ Nouveau: Union Saint-Gilloise vs Inter Milan (21/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:51 info: ⏰ Planifié: Villarreal vs Manchester City
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    📅 Début match: 21/10/2025 19:00:00
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    🚨 Monitoring à: 21/10/2025 18:50:00 (dans 1934 min)
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    ✨ Nouveau: Villarreal vs Manchester City (21/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:51 info: ⏰ Planifié: PSV Eindhoven vs Napoli
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    📅 Début match: 21/10/2025 19:00:00
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    🚨 Monitoring à: 21/10/2025 18:50:00 (dans 1934 min)
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    ✨ Nouveau: PSV Eindhoven vs Napoli (21/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:51 info: ⏰ Planifié: Athletic Bilbao vs Qarabağ FK
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    📅 Début match: 22/10/2025 16:45:00
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    🚨 Monitoring à: 22/10/2025 16:35:00 (dans 3239 min)
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    ✨ Nouveau: Athletic Bilbao vs Qarabağ FK (22/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:51 info: ⏰ Planifié: Galatasaray vs Bodø/Glimt
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    📅 Début match: 22/10/2025 16:45:00
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    🚨 Monitoring à: 22/10/2025 16:35:00 (dans 3239 min)
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    ✨ Nouveau: Galatasaray vs Bodø/Glimt (22/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:51 info: ⏰ Planifié: AS Monaco vs Tottenham Hotspur
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    📅 Début match: 22/10/2025 19:00:00
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    🚨 Monitoring à: 22/10/2025 18:50:00 (dans 3374 min)
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    ✨ Nouveau: AS Monaco vs Tottenham Hotspur (22/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:51 info: ⏰ Planifié: Chelsea vs Ajax
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    📅 Début match: 22/10/2025 19:00:00
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    🚨 Monitoring à: 22/10/2025 18:50:00 (dans 3374 min)
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    ✨ Nouveau: Chelsea vs Ajax (22/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:51 info: ⏰ Planifié: Atalanta BC vs Slavia Praha
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    📅 Début match: 22/10/2025 19:00:00
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    🚨 Monitoring à: 22/10/2025 18:50:00 (dans 3374 min)
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    ✨ Nouveau: Atalanta BC vs Slavia Praha (22/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:51 info: ⏰ Planifié: Bayern Munich vs Club Brugge
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    📅 Début match: 22/10/2025 19:00:00
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    🚨 Monitoring à: 22/10/2025 18:50:00 (dans 3374 min)
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    ✨ Nouveau: Bayern Munich vs Club Brugge (22/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:51 info: ⏰ Planifié: Eintracht Frankfurt vs Liverpool
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    📅 Début match: 22/10/2025 19:00:00
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    🚨 Monitoring à: 22/10/2025 18:50:00 (dans 3374 min)
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    ✨ Nouveau: Eintracht Frankfurt vs Liverpool (22/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:51 info: ⏰ Planifié: Real Madrid vs Juventus
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    📅 Début match: 22/10/2025 19:00:00
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    🚨 Monitoring à: 22/10/2025 18:50:00 (dans 3374 min)
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    ✨ Nouveau: Real Madrid vs Juventus (22/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:51 info: ⏰ Planifié: Sporting Lisbon vs Marseille
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    📅 Début match: 22/10/2025 19:00:00
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    🚨 Monitoring à: 22/10/2025 18:50:00 (dans 3374 min)
+bet-variation-analytic  | 2025-10-20 10:35:51 info:    ✨ Nouveau: Sporting Lisbon vs Marseille (22/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:51 error: ❌ Erreur lors du scan de soccer_uefa_champs_league:
+bet-variation-analytic  | 2025-10-20 10:35:51 info: 📡 Scan de soccer_uefa_europa_league...
+bet-variation-analytic  | 2025-10-20 10:35:51 info: 🔍 Requête: https://api.the-odds-api.com/v4/sports/soccer_uefa_europa_league/odds
+bet-variation-analytic  | 2025-10-20 10:35:51 info: 📋 Params: {"apiKey":"5985c98be973e421db9c408d2cee0242","regions":"eu","markets":"h2h,spreads,totals","oddsFormat":"decimal","dateFormat":"iso"}
+bet-variation-analytic  | 2025-10-20 10:35:52 info: 📊 soccer_uefa_europa_league: 18 événements | Budget: 45/500
+bet-variation-analytic  | 2025-10-20 10:35:52 info: ⏰ Planifié: Go Ahead Eagles vs Aston Villa
+bet-variation-analytic  | 2025-10-20 10:35:52 info:    📅 Début match: 23/10/2025 16:45:00
+bet-variation-analytic  | 2025-10-20 10:35:52 info:    🚨 Monitoring à: 23/10/2025 16:35:00 (dans 4679 min)
+bet-variation-analytic  | 2025-10-20 10:35:52 info:    ✨ Nouveau: Go Ahead Eagles vs Aston Villa (23/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:52 info: ⏰ Planifié: FCSB vs Bologna
+bet-variation-analytic  | 2025-10-20 10:35:52 info:    📅 Début match: 23/10/2025 16:45:00
+bet-variation-analytic  | 2025-10-20 10:35:52 info:    🚨 Monitoring à: 23/10/2025 16:35:00 (dans 4679 min)
+bet-variation-analytic  | 2025-10-20 10:35:52 info:    ✨ Nouveau: FCSB vs Bologna (23/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:52 info: ⏰ Planifié: Lyon vs FC Basel
+bet-variation-analytic  | 2025-10-20 10:35:52 info:    📅 Début match: 23/10/2025 16:45:00
+bet-variation-analytic  | 2025-10-20 10:35:52 info:    🚨 Monitoring à: 23/10/2025 16:35:00 (dans 4679 min)
+bet-variation-analytic  | 2025-10-20 10:35:52 info:    ✨ Nouveau: Lyon vs FC Basel (23/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:52 info: ⏰ Planifié: Fenerbahce vs VfB Stuttgart
+bet-variation-analytic  | 2025-10-20 10:35:52 info:    📅 Début match: 23/10/2025 16:45:00
+bet-variation-analytic  | 2025-10-20 10:35:52 info:    🚨 Monitoring à: 23/10/2025 16:35:00 (dans 4679 min)
+bet-variation-analytic  | 2025-10-20 10:35:52 info:    ✨ Nouveau: Fenerbahce vs VfB Stuttgart (23/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:52 info: ⏰ Planifié: Salzburg vs Ferencváros TC
+bet-variation-analytic  | 2025-10-20 10:35:52 info:    📅 Début match: 23/10/2025 16:45:00
+bet-variation-analytic  | 2025-10-20 10:35:52 info:    🚨 Monitoring à: 23/10/2025 16:35:00 (dans 4679 min)
+bet-variation-analytic  | 2025-10-20 10:35:52 info:    ✨ Nouveau: Salzburg vs Ferencváros TC (23/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:52 info: ⏰ Planifié: Feyenoord vs Panathinaikos FC
+bet-variation-analytic  | 2025-10-20 10:35:52 info:    📅 Début match: 23/10/2025 16:45:00
+bet-variation-analytic  | 2025-10-20 10:35:52 info:    🚨 Monitoring à: 23/10/2025 16:35:00 (dans 4679 min)
+bet-variation-analytic  | 2025-10-20 10:35:52 info:    ✨ Nouveau: Feyenoord vs Panathinaikos FC (23/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:52 info: ⏰ Planifié: KRC Genk vs Real Betis
+bet-variation-analytic  | 2025-10-20 10:35:52 info:    📅 Début match: 23/10/2025 16:45:00
+bet-variation-analytic  | 2025-10-20 10:35:52 info:    🚨 Monitoring à: 23/10/2025 16:35:00 (dans 4679 min)
+bet-variation-analytic  | 2025-10-20 10:35:52 info:    ✨ Nouveau: KRC Genk vs Real Betis (23/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:52 info: ⏰ Planifié: SK Brann vs Rangers FC
+bet-variation-analytic  | 2025-10-20 10:35:52 info:    📅 Début match: 23/10/2025 16:45:00
+bet-variation-analytic  | 2025-10-20 10:35:52 info:    🚨 Monitoring à: 23/10/2025 16:35:00 (dans 4679 min)
+bet-variation-analytic  | 2025-10-20 10:35:52 info:    ✨ Nouveau: SK Brann vs Rangers FC (23/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:52 info: ⏰ Planifié: SC Braga vs Red Star Belgrade
+bet-variation-analytic  | 2025-10-20 10:35:52 info:    📅 Début match: 23/10/2025 16:45:00
+bet-variation-analytic  | 2025-10-20 10:35:52 info:    🚨 Monitoring à: 23/10/2025 16:35:00 (dans 4679 min)
+bet-variation-analytic  | 2025-10-20 10:35:52 info:    ✨ Nouveau: SC Braga vs Red Star Belgrade (23/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:52 info: ⏰ Planifié: AS Roma vs Viktoria Plzeň
+bet-variation-analytic  | 2025-10-20 10:35:52 info:    📅 Début match: 23/10/2025 19:00:00
+bet-variation-analytic  | 2025-10-20 10:35:52 info:    🚨 Monitoring à: 23/10/2025 18:50:00 (dans 4814 min)
+bet-variation-analytic  | 2025-10-20 10:35:52 info:    ✨ Nouveau: AS Roma vs Viktoria Plzeň (23/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:52 info: ⏰ Planifié: Celta Vigo vs Nice
+bet-variation-analytic  | 2025-10-20 10:35:52 info:    📅 Début match: 23/10/2025 19:00:00
+bet-variation-analytic  | 2025-10-20 10:35:52 info:    🚨 Monitoring à: 23/10/2025 18:50:00 (dans 4814 min)
+bet-variation-analytic  | 2025-10-20 10:35:52 info:    ✨ Nouveau: Celta Vigo vs Nice (23/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:52 info: ⏰ Planifié: Celtic vs SK Sturm Graz
+bet-variation-analytic  | 2025-10-20 10:35:52 info:    📅 Début match: 23/10/2025 19:00:00
+bet-variation-analytic  | 2025-10-20 10:35:52 info:    🚨 Monitoring à: 23/10/2025 18:50:00 (dans 4814 min)
+bet-variation-analytic  | 2025-10-20 10:35:52 info:    ✨ Nouveau: Celtic vs SK Sturm Graz (23/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:52 info: ⏰ Planifié: Malmo FF vs Dinamo Zagreb
+bet-variation-analytic  | 2025-10-20 10:35:52 info:    📅 Début match: 23/10/2025 19:00:00
+bet-variation-analytic  | 2025-10-20 10:35:52 info:    🚨 Monitoring à: 23/10/2025 18:50:00 (dans 4814 min)
+bet-variation-analytic  | 2025-10-20 10:35:52 info:    ✨ Nouveau: Malmo FF vs Dinamo Zagreb (23/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:52 info: ⏰ Planifié: Maccabi Tel Aviv vs FC Midtjylland
+bet-variation-analytic  | 2025-10-20 10:35:52 info:    📅 Début match: 23/10/2025 19:00:00
+bet-variation-analytic  | 2025-10-20 10:35:52 info:    🚨 Monitoring à: 23/10/2025 18:50:00 (dans 4814 min)
+bet-variation-analytic  | 2025-10-20 10:35:52 info:    ✨ Nouveau: Maccabi Tel Aviv vs FC Midtjylland (23/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:52 info: ⏰ Planifié: SC Freiburg vs FC Utrecht
+bet-variation-analytic  | 2025-10-20 10:35:52 info:    📅 Début match: 23/10/2025 19:00:00
+bet-variation-analytic  | 2025-10-20 10:35:52 info:    🚨 Monitoring à: 23/10/2025 18:50:00 (dans 4814 min)
+bet-variation-analytic  | 2025-10-20 10:35:52 info:    ✨ Nouveau: SC Freiburg vs FC Utrecht (23/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:52 info: ⏰ Planifié: Lille vs PAOK
+bet-variation-analytic  | 2025-10-20 10:35:52 info:    📅 Début match: 23/10/2025 19:00:00
+bet-variation-analytic  | 2025-10-20 10:35:52 info:    🚨 Monitoring à: 23/10/2025 18:50:00 (dans 4814 min)
+bet-variation-analytic  | 2025-10-20 10:35:52 info:    ✨ Nouveau: Lille vs PAOK (23/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:52 info: ⏰ Planifié: Nottingham Forest vs Porto
+bet-variation-analytic  | 2025-10-20 10:35:52 info:    📅 Début match: 23/10/2025 19:00:00
+bet-variation-analytic  | 2025-10-20 10:35:52 info:    🚨 Monitoring à: 23/10/2025 18:50:00 (dans 4814 min)
+bet-variation-analytic  | 2025-10-20 10:35:52 info:    ✨ Nouveau: Nottingham Forest vs Porto (23/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:52 info: ⏰ Planifié: Young Boys vs PFC Ludogorets Razgrad
+bet-variation-analytic  | 2025-10-20 10:35:52 info:    📅 Début match: 23/10/2025 19:00:00
+bet-variation-analytic  | 2025-10-20 10:35:52 info:    🚨 Monitoring à: 23/10/2025 18:50:00 (dans 4814 min)
+bet-variation-analytic  | 2025-10-20 10:35:52 info:    ✨ Nouveau: Young Boys vs PFC Ludogorets Razgrad (23/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:52 error: ❌ Erreur lors du scan de soccer_uefa_europa_league:
+bet-variation-analytic  | 2025-10-20 10:35:52 info: 📡 Scan de soccer_portugal_primeira_liga...
+bet-variation-analytic  | 2025-10-20 10:35:52 info: 🔍 Requête: https://api.the-odds-api.com/v4/sports/soccer_portugal_primeira_liga/odds
+bet-variation-analytic  | 2025-10-20 10:35:52 info: 📋 Params: {"apiKey":"5985c98be973e421db9c408d2cee0242","regions":"eu","markets":"h2h,spreads,totals","oddsFormat":"decimal","dateFormat":"iso"}
+bet-variation-analytic  | 2025-10-20 10:35:52 info: 📊 soccer_portugal_primeira_liga: 9 événements | Budget: 48/500
+bet-variation-analytic  | 2025-10-20 10:35:52 info: ⏰ Planifié: Alverca vs Gil Vicente
+bet-variation-analytic  | 2025-10-20 10:35:52 info:    📅 Début match: 24/10/2025 19:15:00
+bet-variation-analytic  | 2025-10-20 10:35:52 info:    🚨 Monitoring à: 24/10/2025 19:05:00 (dans 6269 min)
+bet-variation-analytic  | 2025-10-20 10:35:52 info:    ✨ Nouveau: Alverca vs Gil Vicente (24/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:52 info: ⏰ Planifié: Santa Clara vs AVS Futebol SAD
+bet-variation-analytic  | 2025-10-20 10:35:52 info:    📅 Début match: 25/10/2025 17:00:00
+bet-variation-analytic  | 2025-10-20 10:35:52 info:    🚨 Monitoring à: 25/10/2025 16:50:00 (dans 7574 min)
+bet-variation-analytic  | 2025-10-20 10:35:52 info:    ✨ Nouveau: Santa Clara vs AVS Futebol SAD (25/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:52 info: ⏰ Planifié: Benfica vs Arouca
+bet-variation-analytic  | 2025-10-20 10:35:52 info:    📅 Début match: 25/10/2025 19:30:00
+bet-variation-analytic  | 2025-10-20 10:35:52 info:    🚨 Monitoring à: 25/10/2025 19:20:00 (dans 7724 min)
+bet-variation-analytic  | 2025-10-20 10:35:52 info:    ✨ Nouveau: Benfica vs Arouca (25/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:52 info: ⏰ Planifié: CF Estrela vs Rio Ave FC
+bet-variation-analytic  | 2025-10-20 10:35:52 info:    📅 Début match: 25/10/2025 19:30:00
+bet-variation-analytic  | 2025-10-20 10:35:52 info:    🚨 Monitoring à: 25/10/2025 19:20:00 (dans 7724 min)
+bet-variation-analytic  | 2025-10-20 10:35:52 info:    ✨ Nouveau: CF Estrela vs Rio Ave FC (25/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:52 info: ⏰ Planifié: Estoril vs Nacional
+bet-variation-analytic  | 2025-10-20 10:35:52 info:    📅 Début match: 26/10/2025 15:30:00
+bet-variation-analytic  | 2025-10-20 10:35:52 info:    🚨 Monitoring à: 26/10/2025 15:20:00 (dans 8924 min)
+bet-variation-analytic  | 2025-10-20 10:35:52 info:    ✨ Nouveau: Estoril vs Nacional (26/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:52 info: ⏰ Planifié: Famalicão vs Vitória SC
+bet-variation-analytic  | 2025-10-20 10:35:52 info:    📅 Début match: 26/10/2025 15:30:00
+bet-variation-analytic  | 2025-10-20 10:35:52 info:    🚨 Monitoring à: 26/10/2025 15:20:00 (dans 8924 min)
+bet-variation-analytic  | 2025-10-20 10:35:52 info:    ✨ Nouveau: Famalicão vs Vitória SC (26/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:52 info: ⏰ Planifié: Tondela vs Sporting Lisbon
+bet-variation-analytic  | 2025-10-20 10:35:52 info:    📅 Début match: 26/10/2025 18:00:00
+bet-variation-analytic  | 2025-10-20 10:35:52 info:    🚨 Monitoring à: 26/10/2025 17:50:00 (dans 9074 min)
+bet-variation-analytic  | 2025-10-20 10:35:52 info:    ✨ Nouveau: Tondela vs Sporting Lisbon (26/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:52 info: ⏰ Planifié: Braga vs Casa Pia
+bet-variation-analytic  | 2025-10-20 10:35:52 info:    📅 Début match: 26/10/2025 20:30:00
+bet-variation-analytic  | 2025-10-20 10:35:52 info:    🚨 Monitoring à: 26/10/2025 20:20:00 (dans 9224 min)
+bet-variation-analytic  | 2025-10-20 10:35:52 info:    ✨ Nouveau: Braga vs Casa Pia (26/10/2025)
+bet-variation-analytic  | 2025-10-20 10:35:52 error: ❌ Erreur lors du scan de soccer_portugal_primeira_liga:
+bet-variation-analytic  | 2025-10-20 10:35:52 info: 🔍 ═══════════════════════════════════════════════════════
+bet-variation-analytic  | 2025-10-20 10:35:52 info: 📊 Résultat du scan périodique:
+bet-variation-analytic  | 2025-10-20 10:35:52 info:    • Total matchs trouvés: 144
+bet-variation-analytic  | 2025-10-20 10:35:52 info:    • Nouveaux matchs: 94
+bet-variation-analytic  | 2025-10-20 10:35:52 info:    • Matchs avec variations: 0
+bet-variation-analytic  | 2025-10-20 10:35:52 info:    • Matchs trackés: 94
+bet-variation-analytic  | 2025-10-20 10:35:52 info:    • Budget API: 48/500 (9.60%)
+bet-variation-analytic  | 2025-10-20 10:35:52 info:    • Prochain scan: 23/10/2025 10:35:49
+bet-variation-analytic  | 2025-10-20 10:35:52 info: 🔍 ═══════════════════════════════════════════════════════

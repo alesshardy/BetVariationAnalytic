@@ -1,4 +1,5 @@
 const SmartMonitor = require('./monitors/smartMonitor');
+const resultsFetcher = require('./services/resultsFetcher');
 const logger = require('./utils/logger');
 const config = require('./utils/config');
 
@@ -128,7 +129,62 @@ async function startDashboard() {
         }
     });
 
-    const PORT = config.dashboard.port || 3000;
+    // API endpoint pour les paris (betting simulation)
+    app.get('/api/bets', async (req, res) => {
+        try {
+            if (!monitor.db) {
+                return res.status(503).json({ error: 'Base de données non initialisée' });
+            }
+
+            // Récupérer tous les paris
+            const bets = monitor.db.db.prepare(`
+                SELECT * FROM bets
+                ORDER BY timestamp DESC
+                LIMIT 200
+            `).all();
+
+            // Calculer les statistiques
+            const stats = monitor.db.db.prepare(`
+                SELECT 
+                    COUNT(*) as totalBets,
+                    SUM(CASE WHEN result = 'won' THEN 1 ELSE 0 END) as wins,
+                    SUM(CASE WHEN result = 'lost' THEN 1 ELSE 0 END) as losses,
+                    SUM(CASE WHEN result IS NULL THEN 1 ELSE 0 END) as pending,
+                    SUM(profit) as totalProfit,
+                    AVG(profit) as avgProfit
+                FROM bets
+                WHERE result IS NOT NULL
+            `).get();
+
+            const initialBankroll = parseFloat(process.env.INITIAL_BANKROLL) || 1000;
+            const currentBankroll = initialBankroll + (stats.totalProfit || 0);
+            const roi = stats.totalBets > 0 ? ((stats.totalProfit || 0) / initialBankroll * 100) : 0;
+            const winRate = (stats.wins + stats.losses) > 0 
+                ? (stats.wins / (stats.wins + stats.losses) * 100)
+                : 0;
+
+            res.json({
+                bets: bets,
+                stats: {
+                    totalBets: stats.totalBets || 0,
+                    wins: stats.wins || 0,
+                    losses: stats.losses || 0,
+                    pending: stats.pending || 0,
+                    winRate: winRate,
+                    totalProfit: stats.totalProfit || 0,
+                    avgProfit: stats.avgProfit || 0,
+                    initialBankroll: initialBankroll,
+                    currentBankroll: currentBankroll,
+                    roi: roi
+                }
+            });
+        } catch (error) {
+            logger.error('Erreur API /api/bets:', error);
+            res.status(500).json({ error: 'Erreur serveur' });
+        }
+    });
+
+    const PORT = config.dashboard?.port || 3000;
     app.listen(PORT, '0.0.0.0', () => {
         logger.info(`🌐 Dashboard accessible sur http://0.0.0.0:${PORT}`);
     });
@@ -149,6 +205,12 @@ async function main() {
         await monitor.initialize();
         await startDashboard();
         await monitor.start();
+        
+        // Démarrer le fetcher de résultats si activé
+        if (process.env.USE_REAL_RESULTS === 'true') {
+            resultsFetcher.start();
+            logger.info('✅ Results fetcher started');
+        }
         
         logger.info('✅ Application démarrée avec succès');
     } catch (error) {
